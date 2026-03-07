@@ -20,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
 
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Process> Processes => Set<Process>();
+    public DbSet<Equipment> Equipments => Set<Equipment>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -57,6 +58,19 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.HasIndex(p => p.Code).IsUnique();
             b.Property(p => p.Code).HasMaxLength(50);
             b.Property(p => p.Name).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<Equipment>(b =>
+        {
+            b.ToTable("m_equipments");
+            b.HasIndex(e => e.Code).IsUnique();
+            b.Property(e => e.Code).HasMaxLength(50);
+            b.Property(e => e.Name).HasMaxLength(200);
+            // 設備は1つの工程に所属する（工程削除時に設備は残す）
+            b.HasOne(e => e.Process)
+             .WithMany()
+             .HasForeignKey(e => e.ProcessId)
+             .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }
