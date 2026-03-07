@@ -107,6 +107,7 @@ pnpm lint         # ESLint実行
 | データフロー | `basic-design/05_データフロー図.md` |
 | API仕様 | `detailed-design/05_API仕様書.md` |
 | テスト仕様 | `detailed-design/06_テスト仕様書.md` |
+| バックエンドテスト方針 | `detailed-design/09_バックエンドテスト方針.md` |
 | 機能要件 | `requirements/03_機能要件/` |
 | 非機能要件 | `requirements/04_非機能要件.md` |
 | データ要件 | `requirements/06_データ要件.md` |

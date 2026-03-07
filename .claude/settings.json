@@ -10,7 +10,12 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/swagger/index.html)",
       "Bash(dotnet restore development/backend/src/Synapse.API/Synapse.API.csproj)",
       "Bash(dotnet build development/backend/src/Synapse.API/Synapse.API.csproj)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/scalar/v1)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/scalar/v1)",
+      "Bash(dotnet ef migrations add InitialIdentity --project src/Synapse.Infrastructure --startup-project src/Synapse.API --output-dir Persistence/Migrations)",
+      "Bash(curl -s -X POST http://localhost:5000/api/auth/login -H \"Content-Type: application/json\" -d '{\"\"userName\"\":\"\"admin\"\",\"\"password\"\":\"\"Admin1234\"\"}')",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s -X POST http://localhost:5000/api/auth/login -H \"Content-Type: application/json\" -d '{\"\"userName\"\":\"\"admin\"\",\"\"password\"\":\"\"wrongpassword\"\"}')",
+      "Bash(git add .claude/settings.json CLAUDE.md \"detailed-design/07_フロントエンド設計方針.md\" \"detailed-design/08_バックエンド設計方針.md\" \"detailed-design/09_バックエンドテスト方針.md\" development/backend/src/Synapse.API/Program.cs development/backend/src/Synapse.API/Controllers/ development/backend/src/Synapse.Application/Auth/ development/backend/src/Synapse.Application/Common/Interfaces/IIdentityService.cs development/backend/src/Synapse.Application/DependencyInjection.cs development/backend/src/Synapse.Domain/Common/Entity.cs development/backend/src/Synapse.Infrastructure/DependencyInjection.cs development/backend/src/Synapse.Infrastructure/Identity/ development/backend/src/Synapse.Infrastructure/Persistence/ development/backend/src/Synapse.Infrastructure/Synapse.Infrastructure.csproj)"
     ],
     "additionalDirectories": [
       "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain"
