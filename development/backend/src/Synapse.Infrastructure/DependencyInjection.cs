@@ -39,6 +39,7 @@ public static class DependencyInjection
         .AddDefaultTokenProviders();
 
         services.AddScoped<IIdentityService, IdentityService>();
+        services.AddScoped<IUserManagementService, UserManagementService>();
 
         return services;
     }
