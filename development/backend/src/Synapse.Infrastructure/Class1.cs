@@ -1,4 +1,4 @@
-﻿namespace ManufacturingSystem.Infrastructure;
+﻿namespace Synapse.Infrastructure;
 
 public class Class1
 {

@@ -1,4 +1,4 @@
-﻿namespace ManufacturingSystem.Domain;
+﻿namespace Synapse.Domain;
 
 public class Class1
 {

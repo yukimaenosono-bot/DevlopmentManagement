@@ -7,19 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- 認証・認可 -->
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.*" />
-    <!-- API ドキュメント -->
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.*" />
-    <!-- バッチ処理 -->
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.*" />
     <PackageReference Include="Hangfire.PostgreSql" Version="1.20.*" />
-    <!-- ロギング -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.*" />
-    <PackageReference Include="Google.Cloud.Logging.Console" Version="1.*" />
-    <!-- ヘルスチェック -->
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.*" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.*" />
   </ItemGroup>
 
   <ItemGroup>

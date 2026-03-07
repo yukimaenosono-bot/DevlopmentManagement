@@ -1,4 +1,4 @@
-﻿namespace ManufacturingSystem.Application;
+﻿namespace Synapse.Application;
 
 public class Class1
 {
