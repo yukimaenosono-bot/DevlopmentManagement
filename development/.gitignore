@@ -1,0 +1,20 @@
+# .NET
+backend/bin/
+backend/obj/
+backend/**/*.user
+backend/.vs/
+*.suo
+*.user
+
+# Node.js / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# Docker
+.env
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 認証・認可 -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.*" />
+    <!-- API ドキュメント -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.*" />
+    <!-- バッチ処理 -->
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.*" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.20.*" />
+    <!-- ロギング -->
+    <PackageReference Include="Serilog.AspNetCore" Version="9.*" />
+    <PackageReference Include="Google.Cloud.Logging.Console" Version="1.*" />
+    <!-- ヘルスチェック -->
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManufacturingSystem.Application\ManufacturingSystem.Application.csproj" />
+    <ProjectReference Include="..\ManufacturingSystem.Infrastructure\ManufacturingSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

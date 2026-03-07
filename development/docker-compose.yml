@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16
+    container_name: mfg_db
+    environment:
+      POSTGRES_DB: manufacturing_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: localpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mfg_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Default: "Host=db;Database=manufacturing_db;Username=postgres;Password=localpassword"
+      Jwt__SecretKey: "local-dev-secret-key-minimum-32chars!!"
+      Jwt__ExpiresMinutes: "480"
+    ports:
+      - "5000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: mfg_frontend
+    environment:
+      VITE_API_BASE_URL: "http://localhost:5000"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
