@@ -51,7 +51,14 @@
       "Bash(git add .github/)",
       "Bash(git add backend/)",
       "Bash(git add frontend/ --all)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git add .gemini/settings.json .geminiignore Directory.Build.props GEMINI.md Makefile development/backend/src/Synapse.API/Synapse.API.csproj)",
+      "Bash(git add CLAUDE.md)",
+      "Bash(lsof -i :5432 -sTCP:LISTEN)",
+      "Bash(docker stop production-management-db)",
+      "Bash(make up)",
+      "Bash(lsof -i :5000 -sTCP:LISTEN)",
+      "Bash(lsof -i :3000 -sTCP:LISTEN)"
     ]
   }
 }
