@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- .NET 10のワークロード解決エラーを回避するための設定 -->
+    <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+  </PropertyGroup>
+</Project>
