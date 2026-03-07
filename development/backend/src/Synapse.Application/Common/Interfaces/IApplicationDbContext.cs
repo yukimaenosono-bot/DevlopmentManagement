@@ -12,5 +12,6 @@ public interface IApplicationDbContext
     DbSet<Item> Items { get; }
     DbSet<Process> Processes { get; }
     DbSet<Equipment> Equipments { get; }
+    DbSet<WorkOrder> WorkOrders { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

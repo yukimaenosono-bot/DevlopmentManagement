@@ -21,6 +21,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Process> Processes => Set<Process>();
     public DbSet<Equipment> Equipments => Set<Equipment>();
+    public DbSet<WorkOrder> WorkOrders => Set<WorkOrder>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -70,6 +71,24 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.HasOne(e => e.Process)
              .WithMany()
              .HasForeignKey(e => e.ProcessId)
+             .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<WorkOrder>(b =>
+        {
+            b.ToTable("t_work_orders");
+            // 製造指示番号はユーザーが参照する識別子のため、一意制約を設ける
+            b.HasIndex(w => w.WorkOrderNumber).IsUnique();
+            b.Property(w => w.WorkOrderNumber).HasMaxLength(30);
+            b.Property(w => w.ProductionPlanNumber).HasMaxLength(50);
+            b.Property(w => w.LotNumber).HasMaxLength(100);
+            b.Property(w => w.Quantity).HasPrecision(18, 4);
+            b.Property(w => w.WorkInstruction).HasMaxLength(1000);
+            b.Property(w => w.CreatedByUserId).HasMaxLength(450); // Identity の UserId 最大長
+            // 品目マスタは参照のみ（品目削除時に製造指示は残す）
+            b.HasOne(w => w.Item)
+             .WithMany()
+             .HasForeignKey(w => w.ItemId)
              .OnDelete(DeleteBehavior.Restrict);
         });
     }
