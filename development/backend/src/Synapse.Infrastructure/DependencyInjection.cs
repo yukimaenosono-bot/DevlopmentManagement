@@ -25,13 +25,16 @@ public static class DependencyInjection
             sp.GetRequiredService<ApplicationDbContext>());
 
         // ── Identity（ユーザー管理・パスワードハッシュ等）──
-        services.AddIdentity<AppUser, IdentityRole>(options =>
+        // AddIdentity ではなく AddIdentityCore を使う。
+        // AddIdentity は Cookie 認証をデフォルトに設定するため JWT と競合する。
+        services.AddIdentityCore<AppUser>(options =>
         {
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireDigit = false;
             options.Password.RequiredLength = 8;
         })
+        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 

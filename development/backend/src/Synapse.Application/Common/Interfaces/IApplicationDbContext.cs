@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Synapse.Domain.Entities;
+
 namespace Synapse.Application.Common.Interfaces;
 
 /// <summary>
@@ -6,5 +9,6 @@ namespace Synapse.Application.Common.Interfaces;
 /// </summary>
 public interface IApplicationDbContext
 {
+    DbSet<Item> Items { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

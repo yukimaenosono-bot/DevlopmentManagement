@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Synapse.Application.Common.Interfaces;
 using Synapse.Domain.Common;
+using Synapse.Domain.Entities;
 using Synapse.Infrastructure.Identity;
 
 namespace Synapse.Infrastructure.Persistence;
@@ -16,6 +17,8 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
         : base(options)
     {
     }
+
+    public DbSet<Item> Items => Set<Item>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -34,6 +37,17 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        // 業務エンティティのマッピング設定はここに追加していく
+
+        modelBuilder.Entity<Item>(b =>
+        {
+            b.ToTable("m_items");
+            b.HasIndex(i => i.Code).IsUnique();
+            b.Property(i => i.Code).HasMaxLength(50);
+            b.Property(i => i.Name).HasMaxLength(200);
+            b.Property(i => i.ShortName).HasMaxLength(100);
+            b.Property(i => i.Unit).HasMaxLength(20);
+            b.Property(i => i.StandardUnitPrice).HasPrecision(18, 4);
+            b.Property(i => i.SafetyStockQuantity).HasPrecision(18, 4);
+        });
     }
 }
