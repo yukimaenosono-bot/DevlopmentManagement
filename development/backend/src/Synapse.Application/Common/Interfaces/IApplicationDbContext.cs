@@ -10,5 +10,6 @@ namespace Synapse.Application.Common.Interfaces;
 public interface IApplicationDbContext
 {
     DbSet<Item> Items { get; }
+    DbSet<Process> Processes { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

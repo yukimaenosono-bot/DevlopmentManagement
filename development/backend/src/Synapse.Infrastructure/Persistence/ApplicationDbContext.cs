@@ -19,6 +19,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     }
 
     public DbSet<Item> Items => Set<Item>();
+    public DbSet<Process> Processes => Set<Process>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -48,6 +49,14 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.Property(i => i.Unit).HasMaxLength(20);
             b.Property(i => i.StandardUnitPrice).HasPrecision(18, 4);
             b.Property(i => i.SafetyStockQuantity).HasPrecision(18, 4);
+        });
+
+        modelBuilder.Entity<Process>(b =>
+        {
+            b.ToTable("m_processes");
+            b.HasIndex(p => p.Code).IsUnique();
+            b.Property(p => p.Code).HasMaxLength(50);
+            b.Property(p => p.Name).HasMaxLength(200);
         });
     }
 }

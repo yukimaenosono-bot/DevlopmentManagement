@@ -1,11 +1,11 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Synapse.Application.Common.Interfaces;
 using Synapse.Application.Items.Commands;
 using Synapse.Domain.Entities;
 using Synapse.Domain.Enums;
+using Synapse.Tests.TestHelpers;
 
 namespace Synapse.Tests.Application.Items.Commands;
 
@@ -78,43 +78,3 @@ public class CreateItemCommandHandlerTests
     }
 }
 
-// ── EF Core の非同期クエリをテストで使うためのヘルパー ──
-
-internal class TestAsyncQueryProvider<T> : IAsyncQueryProvider
-{
-    private readonly IQueryProvider _inner;
-
-    internal TestAsyncQueryProvider(IQueryProvider inner) => _inner = inner;
-
-    public IQueryable CreateQuery(System.Linq.Expressions.Expression expression) => _inner.CreateQuery(expression);
-    public IQueryable<TElement> CreateQuery<TElement>(System.Linq.Expressions.Expression expression) => new TestAsyncEnumerable<TElement>(expression);
-    public object? Execute(System.Linq.Expressions.Expression expression) => _inner.Execute(expression);
-    public TResult Execute<TResult>(System.Linq.Expressions.Expression expression) => _inner.Execute<TResult>(expression);
-
-    public TResult ExecuteAsync<TResult>(System.Linq.Expressions.Expression expression, CancellationToken cancellationToken = default)
-    {
-        var result = Execute(expression);
-        return (TResult)typeof(Task)
-            .GetMethod(nameof(Task.FromResult))!
-            .MakeGenericMethod(typeof(TResult).GetGenericArguments()[0])
-            .Invoke(null, [result])!;
-    }
-}
-
-internal class TestAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
-{
-    public TestAsyncEnumerable(IEnumerable<T> enumerable) : base(enumerable) { }
-    public TestAsyncEnumerable(System.Linq.Expressions.Expression expression) : base(expression) { }
-    IQueryProvider IQueryable.Provider => new TestAsyncQueryProvider<T>(this);
-    public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken ct = default)
-        => new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
-}
-
-internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
-{
-    private readonly IEnumerator<T> _inner;
-    public TestAsyncEnumerator(IEnumerator<T> inner) => _inner = inner;
-    public T Current => _inner.Current;
-    public ValueTask<bool> MoveNextAsync() => ValueTask.FromResult(_inner.MoveNext());
-    public ValueTask DisposeAsync() { _inner.Dispose(); return ValueTask.CompletedTask; }
-}
