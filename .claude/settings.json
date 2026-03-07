@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:5000/weatherforecast)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(docker ps -a --format \"table {{.Names}}\\\\t{{.Status}}\")",
+      "Bash(lsof -i :5432,5000,3000 -sTCP:LISTEN)",
+      "Bash(docker ps --format \"table {{.Names}}\\\\t{{.Status}}\\\\t{{.Ports}}\")",
+      "Bash(dotnet build src/Synapse.API/Synapse.API.csproj)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/swagger/index.html)",
+      "Bash(dotnet restore development/backend/src/Synapse.API/Synapse.API.csproj)",
+      "Bash(dotnet build development/backend/src/Synapse.API/Synapse.API.csproj)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/scalar/v1)"
+    ],
+    "additionalDirectories": [
+      "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain"
+    ]
+  }
+}
