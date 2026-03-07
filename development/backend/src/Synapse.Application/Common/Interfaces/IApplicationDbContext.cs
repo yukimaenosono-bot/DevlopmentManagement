@@ -13,5 +13,6 @@ public interface IApplicationDbContext
     DbSet<Process> Processes { get; }
     DbSet<Equipment> Equipments { get; }
     DbSet<WorkOrder> WorkOrders { get; }
+    DbSet<BomLine> BomLines { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

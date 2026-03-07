@@ -22,6 +22,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     public DbSet<Process> Processes => Set<Process>();
     public DbSet<Equipment> Equipments => Set<Equipment>();
     public DbSet<WorkOrder> WorkOrders => Set<WorkOrder>();
+    public DbSet<BomLine> BomLines => Set<BomLine>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -89,6 +90,24 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.HasOne(w => w.Item)
              .WithMany()
              .HasForeignKey(w => w.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<BomLine>(b =>
+        {
+            b.ToTable("m_bom");
+            // 複合主キー: 親品目 + 子品目
+            b.HasKey(bl => new { bl.ParentItemId, bl.ChildItemId });
+            b.Property(bl => bl.Unit).HasMaxLength(20);
+            b.Property(bl => bl.Quantity).HasPrecision(18, 4);
+            // 親品目・子品目はどちらも削除不可（BOM が参照しているため）
+            b.HasOne(bl => bl.ParentItem)
+             .WithMany()
+             .HasForeignKey(bl => bl.ParentItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(bl => bl.ChildItem)
+             .WithMany()
+             .HasForeignKey(bl => bl.ChildItemId)
              .OnDelete(DeleteBehavior.Restrict);
         });
     }
