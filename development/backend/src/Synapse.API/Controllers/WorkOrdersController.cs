@@ -140,6 +140,52 @@ public class WorkOrdersController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+
+    /// <summary>
+    /// 製造指示を着手中に移行する（MO-007）。
+    /// 発行済（Issued）からのみ遷移可能。着手後は指示数量が変更不可になる。
+    /// </summary>
+    [HttpPost("{id:guid}/start")]
+    public async Task<IActionResult> Start(Guid id, CancellationToken ct)
+    {
+        try
+        {
+            await _mediator.Send(new StartWorkOrderCommand(id), ct);
+            return NoContent();
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            // 発行済以外からの着手試行
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// 製造指示を完了に移行する（MO-007）。
+    /// 着手中（InProgress）からのみ遷移可能。完了後は変更・キャンセル不可。
+    /// </summary>
+    [HttpPost("{id:guid}/complete")]
+    public async Task<IActionResult> Complete(Guid id, CancellationToken ct)
+    {
+        try
+        {
+            await _mediator.Send(new CompleteWorkOrderCommand(id), ct);
+            return NoContent();
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            // 着手中以外からの完了試行
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 }
 
 /// <summary>
