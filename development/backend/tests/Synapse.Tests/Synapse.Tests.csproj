@@ -17,7 +17,7 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ManufacturingSystem.Application\ManufacturingSystem.Application.csproj" />
-    <ProjectReference Include="..\..\src\ManufacturingSystem.Domain\ManufacturingSystem.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Synapse.Application\Synapse.Application.csproj" />
+    <ProjectReference Include="..\..\src\Synapse.Domain\Synapse.Domain.csproj" />
   </ItemGroup>
 </Project>

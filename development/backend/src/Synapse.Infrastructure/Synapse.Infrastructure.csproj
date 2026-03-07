@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ManufacturingSystem.Application\ManufacturingSystem.Application.csproj" />
-    <ProjectReference Include="..\ManufacturingSystem.Domain\ManufacturingSystem.Domain.csproj" />
+    <ProjectReference Include="..\Synapse.Application\Synapse.Application.csproj" />
+    <ProjectReference Include="..\Synapse.Domain\Synapse.Domain.csproj" />
   </ItemGroup>
 </Project>

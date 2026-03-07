@@ -4,18 +4,18 @@ EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY ["src/ManufacturingSystem.API/ManufacturingSystem.API.csproj", "src/ManufacturingSystem.API/"]
-COPY ["src/ManufacturingSystem.Application/ManufacturingSystem.Application.csproj", "src/ManufacturingSystem.Application/"]
-COPY ["src/ManufacturingSystem.Domain/ManufacturingSystem.Domain.csproj", "src/ManufacturingSystem.Domain/"]
-COPY ["src/ManufacturingSystem.Infrastructure/ManufacturingSystem.Infrastructure.csproj", "src/ManufacturingSystem.Infrastructure/"]
-RUN dotnet restore "src/ManufacturingSystem.API/ManufacturingSystem.API.csproj"
+COPY ["src/Synapse.API/Synapse.API.csproj", "src/Synapse.API/"]
+COPY ["src/Synapse.Application/Synapse.Application.csproj", "src/Synapse.Application/"]
+COPY ["src/Synapse.Domain/Synapse.Domain.csproj", "src/Synapse.Domain/"]
+COPY ["src/Synapse.Infrastructure/Synapse.Infrastructure.csproj", "src/Synapse.Infrastructure/"]
+RUN dotnet restore "src/Synapse.API/Synapse.API.csproj"
 COPY . .
-RUN dotnet build "src/ManufacturingSystem.API/ManufacturingSystem.API.csproj" -c Release -o /app/build
+RUN dotnet build "src/Synapse.API/Synapse.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "src/ManufacturingSystem.API/ManufacturingSystem.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "src/Synapse.API/Synapse.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ManufacturingSystem.API.dll"]
+ENTRYPOINT ["dotnet", "Synapse.API.dll"]

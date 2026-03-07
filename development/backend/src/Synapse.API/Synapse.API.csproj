@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ManufacturingSystem.Application\ManufacturingSystem.Application.csproj" />
-    <ProjectReference Include="..\ManufacturingSystem.Infrastructure\ManufacturingSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\Synapse.Application\Synapse.Application.csproj" />
+    <ProjectReference Include="..\Synapse.Infrastructure\Synapse.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
