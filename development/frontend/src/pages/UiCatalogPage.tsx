@@ -125,7 +125,7 @@ export function UiCatalogPage() {
       {/* ===================== 3. Select ===================== */}
       <Section title="3. Select">
         <Row label="default">
-          <Select value={selectVal} onValueChange={setSelectVal}>
+          <Select value={selectVal} onValueChange={(v) => setSelectVal(v ?? "")}>
             <SelectTrigger className="w-48">
               <SelectValue placeholder="選択してください" />
             </SelectTrigger>
@@ -329,8 +329,8 @@ export function UiCatalogPage() {
       <Section title="11. Tooltip">
         <Row label="default">
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline">ホバーしてください</Button>
+            <TooltipTrigger render={<Button variant="outline" />}>
+              ホバーしてください
             </TooltipTrigger>
             <TooltipContent>ツールチップのテキスト</TooltipContent>
           </Tooltip>

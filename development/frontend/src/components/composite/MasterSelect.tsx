@@ -32,7 +32,7 @@ function MasterSelect({
   className,
 }: MasterSelectProps) {
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={(v) => v !== null && onValueChange(v)}>
       <SelectTrigger
         className={cn("w-full", className)}
         disabled={isLoading || disabled}

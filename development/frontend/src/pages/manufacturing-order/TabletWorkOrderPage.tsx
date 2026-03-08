@@ -1,8 +1,9 @@
+// SCR-MO-004 現場端末用製造指示
+import { useParams } from "react-router-dom"
+import { TabletWorkOrderView } from "@/features/manufacturing-order/components/TabletWorkOrderView"
+
 export function TabletWorkOrderPage() {
-  return (
-    <div className="space-y-2">
-      <h2 className="text-xl font-semibold">現場タブレット用</h2>
-      <p className="text-sm text-muted-foreground">URL: /tablet/work-orders/:id — 実装予定</p>
-    </div>
-  )
+  const { id } = useParams<{ id: string }>()
+  if (!id) return null
+  return <TabletWorkOrderView id={id} />
 }
