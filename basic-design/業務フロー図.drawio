@@ -1,0 +1,283 @@
+<mxfile host="Claude">
+  <diagram name="業務フロー図" id="business-flow">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Synapse 製造管理システム — 業務フロー図" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="15" width="850" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- LEGEND -->
+        <mxCell id="leg_bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="880" y="10" width="270" height="205" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_title" value="■ 凡例（担当モジュール）" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="892" y="18" width="248" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="生産計画管理" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="892" y="47" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="製造指示管理" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="47" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="在庫管理" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="892" y="85" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" value="工程管理" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="85" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" value="品質管理" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="892" y="123" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l6" value="出荷管理" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="123" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l7" value="外部システム" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="892" y="161" width="118" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="l8" value="判定・分岐" style="rhombus;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="155" width="118" height="38" as="geometry" />
+        </mxCell>
+
+        <!-- ===== SECTION 1: 受注〜生産計画 ===== -->
+        <mxCell id="s1" value="① 受注〜生産計画" style="text;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=center;fontStyle=1;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="78" width="175" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n0" value="受注システム（外部）" style="ellipse;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="80" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n1" value="受注情報取込　PP-006&#xa;Webhook受信" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="180" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="生産計画作成　PP-001&#xa;品目・数量・納期を計画" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="275" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2r" value="負荷・能力照会　PP-005&#xa;設備・人員の負荷確認" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="275" width="185" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e01" value="受注情報" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="n0" target="n1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n1" target="n2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2r" value="確認（任意）" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=10;" edge="1" source="n2" target="n2r" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===== SECTION 2: 製造指示 ===== -->
+        <mxCell id="s2" value="② 製造指示" style="text;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;align=center;fontStyle=1;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="360" width="175" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3" value="製造指示展開　PP-005&#xa;計画→製造指示一括展開" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="365" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n3l" value="原材料引当確認　INV&#xa;在庫引当可否チェック" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="365" width="190" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n4" value="製造指示発行　MO-001&#xa;製造指示番号採番・登録" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="460" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n5" value="製造指示配信　MO-005&#xa;SignalR プッシュ通知" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="555" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n5r" value="現場端末&#xa;（タブレット）" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="785" y="558" width="155" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n2" target="n3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e33l" value="確認依頼" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="n3" target="n3l" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e34" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n3" target="n4" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e45" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n4" target="n5" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e55r" value="通知配信" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="n5" target="n5r" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===== SECTION 3: 工程管理 ===== -->
+        <mxCell id="s3" value="③ 工程管理" style="text;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=center;fontStyle=1;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="645" width="175" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n6" value="工程着手登録　WO-001&#xa;バーコードスキャン対応" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="650" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n7" value="工程実績入力　WO-004&#xa;作業時間・設備・作業者記録" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="745" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n8" value="工程内検査　QC-002&#xa;工程中の品質チェック" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="840" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d1" value="合否判定" style="rhombus;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="505" y="935" width="150" height="68" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n8l" value="不良登録・処置&#xa;QC-004 / QC-005" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="185" y="948" width="185" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n9" value="工程完了登録　WO-002&#xa;実績数量・完了時刻記録" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1055" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d2" value="全工程&#xa;完了？" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="505" y="1150" width="150" height="68" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e56" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n5" target="n6" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e67" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n6" target="n7" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e78" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n7" target="n8" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8d1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n8" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1l" value="不合格" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="d1" target="n8l" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed1n9" value="合格" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="d1" target="n9" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en9d2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n9" target="d2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Loop: 次工程あり → 工程着手へ戻る -->
+        <mxCell id="ed2n6" value="次工程あり" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="d2" target="n6" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="1184" />
+              <mxPoint x="820" y="674" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===== SECTION 4: 品質管理 ===== -->
+        <mxCell id="s4" value="④ 品質管理（完成品）" style="text;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=center;fontStyle=1;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1258" width="205" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n10" value="完成品検査　QC-003&#xa;出荷前最終品質チェック" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1263" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d3" value="合否判定" style="rhombus;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="505" y="1358" width="150" height="68" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n10l" value="不良処置　QC-005&#xa;手直し / 廃棄 / 特採" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="185" y="1368" width="185" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n11" value="完成品入庫　INV-002&#xa;ロット番号登録・在庫反映" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1475" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ed2n10" value="全工程完了" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="d2" target="n10" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en10d3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n10" target="d3" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed3l" value="不合格" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="d3" target="n10l" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed3n11" value="合格" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="d3" target="n11" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- 手直し後 再検査ループ -->
+        <mxCell id="en10l_rework" value="手直し後&#xa;再検査" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="n10l" target="n10" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="277" y="1300" />
+              <mxPoint x="480" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===== SECTION 5: 出荷管理 ===== -->
+        <mxCell id="s5" value="⑤ 出荷管理" style="text;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;fontStyle=1;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1563" width="175" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n12" value="出荷指示作成　SH-001&#xa;受注紐付け・出荷予定登録" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1568" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n13" value="ピッキング　SH-003&#xa;ピッキングリスト発行" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1663" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n14" value="出荷実績登録　SH-004&#xa;実出荷数量・ロット記録・在庫減算" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1758" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n15" value="納品書・送り状発行　SH-005&#xa;PDF出力・トレーサビリティ記録" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1853" width="200" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n16" value="ERP / 会計システム&#xa;製造実績・在庫残高連携&#xa;（日次バッチ 22:00）" style="ellipse;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="170" y="1853" width="195" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n17" value="受注システム&#xa;出荷完了通知　SH-006" style="ellipse;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="790" y="1860" width="175" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="en11n12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n11" target="n12" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en12n13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n12" target="n13" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en13n14" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n13" target="n14" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en14n15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n14" target="n15" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en15n16" value="CSV 日次出力" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="n15" target="n16" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en15n17" value="出荷完了通知" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="n15" target="n17" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 在庫アラート → 調達システム -->
+        <mxCell id="n_inv_alert" value="在庫アラート通知　INV-005&#xa;調達システムへ発注依頼" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="1478" width="185" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="en11_alert" value="安全在庫割れ時" style="edgeStyle=orthogonalEdgeStyle;dashed=1;fontSize=10;" edge="1" source="n11" target="n_inv_alert" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
