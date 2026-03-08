@@ -11,6 +11,12 @@
     <OpenApiDocumentsDirectory>../../../</OpenApiDocumentsDirectory>
   </PropertyGroup>
 
+  <Target Name="RenameOpenApiFile" AfterTargets="GenerateOpenApiDocuments">
+    <Move SourceFiles="$(OpenApiDocumentsDirectory)Synapse.API_openapi.json" 
+          DestinationFiles="$(OpenApiDocumentsDirectory)openapi.json" 
+          Condition="Exists('$(OpenApiDocumentsDirectory)Synapse.API_openapi.json')" />
+  </Target>
+
   <ItemGroup>
     <!-- ビルド時 OpenAPI スペック生成 -->
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="10.0.*" />

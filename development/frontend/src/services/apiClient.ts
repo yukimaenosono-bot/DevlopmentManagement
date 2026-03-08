@@ -1,9 +1,17 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
 
-// ベースURL は環境変数から取得する（.env.local で VITE_API_URL=http://localhost:5000 を設定する）
+// orval の内部ビルド (es2015) で import.meta が警告を出さないように関数化
+const getBaseUrl = () => {
+  try {
+    return import.meta.env.VITE_API_URL ?? 'http://localhost:5000'
+  } catch {
+    return 'http://localhost:5000'
+  }
+}
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:5000',
+  baseURL: getBaseUrl(),
 })
 
 // JWT トークンをすべてのリクエストに自動付与する
