@@ -29,16 +29,7 @@ export default defineConfig({
       },
     },
   },
-  // Zod スキーマ生成用の設定
-  zod: {
-    input: {
-      target: '../openapi.json',
-    },
-    output: {
-      mode: 'tags-split',
-      client: 'zod',
-      target: 'src/generated/zod',
-      fileExtension: '.zod.ts',
-    },
-  },
+  // NOTE: Zod スキーマ自動生成は orval が Zod v4 に未対応のため無効化。
+  // フォームバリデーション用 Zod スキーマは features/[domain]/schemas/ に手書きで管理する。
+  // zod: { ... }
 })
