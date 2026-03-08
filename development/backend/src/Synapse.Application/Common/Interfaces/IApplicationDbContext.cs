@@ -20,5 +20,10 @@ public interface IApplicationDbContext
     DbSet<Routing> Routings { get; }
     DbSet<RoutingStep> RoutingSteps { get; }
     DbSet<WorkOrderOperation> WorkOrderOperations { get; }
+    DbSet<ProductionPlan> ProductionPlans { get; }
+    DbSet<QualityInspection> QualityInspections { get; }
+    DbSet<Defect> Defects { get; }
+    DbSet<Customer> Customers { get; }
+    DbSet<ShipmentOrder> ShipmentOrders { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

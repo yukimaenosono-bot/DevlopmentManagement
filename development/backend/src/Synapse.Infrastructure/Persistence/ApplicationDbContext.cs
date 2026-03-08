@@ -29,6 +29,11 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     public DbSet<Routing> Routings => Set<Routing>();
     public DbSet<RoutingStep> RoutingSteps => Set<RoutingStep>();
     public DbSet<WorkOrderOperation> WorkOrderOperations => Set<WorkOrderOperation>();
+    public DbSet<ProductionPlan> ProductionPlans => Set<ProductionPlan>();
+    public DbSet<QualityInspection> QualityInspections => Set<QualityInspection>();
+    public DbSet<Defect> Defects => Set<Defect>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<ShipmentOrder> ShipmentOrders => Set<ShipmentOrder>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -216,6 +221,113 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
              .OnDelete(DeleteBehavior.SetNull);
             b.HasIndex(o => o.WorkOrderId);
             b.HasIndex(o => new { o.WorkOrderId, o.Sequence });
+        });
+
+        modelBuilder.Entity<ProductionPlan>(b =>
+        {
+            b.ToTable("t_production_plans");
+            b.HasIndex(p => p.PlanNumber).IsUnique();
+            b.Property(p => p.PlanNumber).HasMaxLength(20);
+            b.Property(p => p.PlannedQuantity).HasPrecision(18, 4);
+            b.Property(p => p.Notes).HasMaxLength(1000);
+            b.Property(p => p.OrderReference).HasMaxLength(100);
+            b.Property(p => p.CreatedByUserId).HasMaxLength(450);
+            // 品目削除不可（生産計画が参照しているため）
+            b.HasOne(p => p.Item)
+             .WithMany()
+             .HasForeignKey(p => p.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasIndex(p => p.Status);
+            b.HasIndex(p => new { p.ItemId, p.Status });
+        });
+
+        modelBuilder.Entity<QualityInspection>(b =>
+        {
+            b.ToTable("t_quality_inspections");
+            b.HasIndex(q => q.InspectionNumber).IsUnique();
+            b.Property(q => q.InspectionNumber).HasMaxLength(20);
+            b.Property(q => q.LotNumber).HasMaxLength(100);
+            b.Property(q => q.InspectorUserId).HasMaxLength(450);
+            b.Property(q => q.InspectionQuantity).HasPrecision(18, 4);
+            b.Property(q => q.PassQuantity).HasPrecision(18, 4);
+            b.Property(q => q.FailQuantity).HasPrecision(18, 4);
+            b.Property(q => q.Notes).HasMaxLength(1000);
+            b.HasOne(q => q.Item)
+             .WithMany()
+             .HasForeignKey(q => q.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(q => q.WorkOrder)
+             .WithMany()
+             .HasForeignKey(q => q.WorkOrderId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasIndex(q => q.InspectionType);
+            b.HasIndex(q => new { q.ItemId, q.InspectedAt });
+        });
+
+        modelBuilder.Entity<Defect>(b =>
+        {
+            b.ToTable("t_defects");
+            b.HasIndex(d => d.DefectNumber).IsUnique();
+            b.Property(d => d.DefectNumber).HasMaxLength(20);
+            b.Property(d => d.Description).HasMaxLength(1000);
+            b.Property(d => d.Quantity).HasPrecision(18, 4);
+            b.Property(d => d.EstimatedCause).HasMaxLength(1000);
+            b.Property(d => d.CorrectiveAction).HasMaxLength(1000);
+            b.Property(d => d.DispositionNote).HasMaxLength(500);
+            b.HasOne(d => d.Item)
+             .WithMany()
+             .HasForeignKey(d => d.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(d => d.WorkOrder)
+             .WithMany()
+             .HasForeignKey(d => d.WorkOrderId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasOne(d => d.QualityInspection)
+             .WithMany()
+             .HasForeignKey(d => d.QualityInspectionId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasOne(d => d.Process)
+             .WithMany()
+             .HasForeignKey(d => d.ProcessId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasIndex(d => d.ItemId);
+            b.HasIndex(d => new { d.ItemId, d.OccurredAt });
+        });
+
+        modelBuilder.Entity<Customer>(b =>
+        {
+            b.ToTable("m_customers");
+            b.HasIndex(c => c.Code).IsUnique();
+            b.Property(c => c.Code).HasMaxLength(50);
+            b.Property(c => c.Name).HasMaxLength(200);
+            b.Property(c => c.Address).HasMaxLength(500);
+            b.Property(c => c.Phone).HasMaxLength(50);
+            b.Property(c => c.Email).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<ShipmentOrder>(b =>
+        {
+            b.ToTable("t_shipment_orders");
+            b.HasIndex(s => s.ShipmentNumber).IsUnique();
+            b.Property(s => s.ShipmentNumber).HasMaxLength(20);
+            b.Property(s => s.OrderReference).HasMaxLength(100);
+            b.Property(s => s.LotNumber).HasMaxLength(100);
+            b.Property(s => s.Carrier).HasMaxLength(200);
+            b.Property(s => s.Notes).HasMaxLength(1000);
+            b.Property(s => s.PlannedQuantity).HasPrecision(18, 4);
+            b.Property(s => s.ActualQuantity).HasPrecision(18, 4);
+            b.Property(s => s.ShippedByUserId).HasMaxLength(450);
+            b.HasOne(s => s.Customer)
+             .WithMany()
+             .HasForeignKey(s => s.CustomerId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(s => s.Item)
+             .WithMany()
+             .HasForeignKey(s => s.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasIndex(s => s.Status);
+            b.HasIndex(s => new { s.CustomerId, s.Status });
+            b.HasIndex(s => s.PlannedShipDate);
         });
     }
 }

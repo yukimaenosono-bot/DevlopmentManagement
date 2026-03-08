@@ -184,6 +184,128 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                     b.ToTable("m_bom", (string)null);
                 });
 
+            modelBuilder.Entity("Synapse.Domain.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("m_customers", (string)null);
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.Defect", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CorrectiveAction")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DefectNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("Disposition")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DispositionNote")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("EstimatedCause")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ProcessId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("QualityInspectionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WorkOrderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DefectNumber")
+                        .IsUnique();
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("QualityInspectionId");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.HasIndex("ItemId", "OccurredAt");
+
+                    b.ToTable("t_defects", (string)null);
+                });
+
             modelBuilder.Entity("Synapse.Domain.Entities.Equipment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -373,6 +495,142 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                     b.ToTable("m_processes", (string)null);
                 });
 
+            modelBuilder.Entity("Synapse.Domain.Entities.ProductionPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<DateOnly>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("OrderReference")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateOnly>("PlanEndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("PlanNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateOnly>("PlanStartDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("PlannedQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanNumber")
+                        .IsUnique();
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("ItemId", "Status");
+
+                    b.ToTable("t_production_plans", (string)null);
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.QualityInspection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("FailQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<DateTime>("InspectedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("InspectionNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal>("InspectionQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<int>("InspectionType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("InspectorUserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LotNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<decimal>("PassQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<int>("Result")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WorkOrderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InspectionNumber")
+                        .IsUnique();
+
+                    b.HasIndex("InspectionType");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.HasIndex("ItemId", "InspectedAt");
+
+                    b.ToTable("t_quality_inspections", (string)null);
+                });
+
             modelBuilder.Entity("Synapse.Domain.Entities.Routing", b =>
                 {
                     b.Property<Guid>("Id")
@@ -447,6 +705,83 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("m_routing_steps", (string)null);
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.ShipmentOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("ActualQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<string>("Carrier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LotNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("OrderReference")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal>("PlannedQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<DateOnly>("PlannedShipDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("ShipmentNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("ShippedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ShippedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("PlannedShipDate");
+
+                    b.HasIndex("ShipmentNumber")
+                        .IsUnique();
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("CustomerId", "Status");
+
+                    b.ToTable("t_shipment_orders", (string)null);
                 });
 
             modelBuilder.Entity("Synapse.Domain.Entities.Stock", b =>
@@ -783,6 +1118,38 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                     b.Navigation("ParentItem");
                 });
 
+            modelBuilder.Entity("Synapse.Domain.Entities.Defect", b =>
+                {
+                    b.HasOne("Synapse.Domain.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Synapse.Domain.Entities.Process", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Synapse.Domain.Entities.QualityInspection", "QualityInspection")
+                        .WithMany()
+                        .HasForeignKey("QualityInspectionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Synapse.Domain.Entities.WorkOrder", "WorkOrder")
+                        .WithMany()
+                        .HasForeignKey("WorkOrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Process");
+
+                    b.Navigation("QualityInspection");
+
+                    b.Navigation("WorkOrder");
+                });
+
             modelBuilder.Entity("Synapse.Domain.Entities.Equipment", b =>
                 {
                     b.HasOne("Synapse.Domain.Entities.Process", "Process")
@@ -811,6 +1178,35 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.ProductionPlan", b =>
+                {
+                    b.HasOne("Synapse.Domain.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.QualityInspection", b =>
+                {
+                    b.HasOne("Synapse.Domain.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Synapse.Domain.Entities.WorkOrder", "WorkOrder")
+                        .WithMany()
+                        .HasForeignKey("WorkOrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Item");
+
+                    b.Navigation("WorkOrder");
                 });
 
             modelBuilder.Entity("Synapse.Domain.Entities.Routing", b =>
@@ -846,6 +1242,25 @@ namespace Synapse.Infrastructure.Persistence.Migrations
                     b.Navigation("Equipment");
 
                     b.Navigation("Process");
+                });
+
+            modelBuilder.Entity("Synapse.Domain.Entities.ShipmentOrder", b =>
+                {
+                    b.HasOne("Synapse.Domain.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Synapse.Domain.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Synapse.Domain.Entities.Stock", b =>
