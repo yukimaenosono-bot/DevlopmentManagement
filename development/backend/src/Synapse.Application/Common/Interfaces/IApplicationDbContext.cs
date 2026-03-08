@@ -17,5 +17,8 @@ public interface IApplicationDbContext
     DbSet<Warehouse> Warehouses { get; }
     DbSet<Stock> Stocks { get; }
     DbSet<InventoryTransaction> InventoryTransactions { get; }
+    DbSet<Routing> Routings { get; }
+    DbSet<RoutingStep> RoutingSteps { get; }
+    DbSet<WorkOrderOperation> WorkOrderOperations { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

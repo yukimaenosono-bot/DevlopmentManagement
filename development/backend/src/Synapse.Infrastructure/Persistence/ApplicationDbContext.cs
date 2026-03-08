@@ -26,6 +26,9 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
     public DbSet<Stock> Stocks => Set<Stock>();
     public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
+    public DbSet<Routing> Routings => Set<Routing>();
+    public DbSet<RoutingStep> RoutingSteps => Set<RoutingStep>();
+    public DbSet<WorkOrderOperation> WorkOrderOperations => Set<WorkOrderOperation>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -148,9 +151,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.Property(t => t.ReferenceNumber).HasMaxLength(100);
             b.Property(t => t.Note).HasMaxLength(500);
             b.Property(t => t.CreatedByUserId).HasMaxLength(450);
-            // 履歴の検索は処理日時降順が主なアクセスパターン
             b.HasIndex(t => t.TransactedAt);
-            // 品目・倉庫は削除不可（履歴が参照しているため）
             b.HasOne(t => t.Item)
              .WithMany()
              .HasForeignKey(t => t.ItemId)
@@ -159,6 +160,62 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
              .WithMany()
              .HasForeignKey(t => t.WarehouseId)
              .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Routing>(b =>
+        {
+            b.ToTable("m_routings");
+            b.Property(r => r.Name).HasMaxLength(200);
+            // 品目削除不可（ルーティングが参照しているため）
+            b.HasOne(r => r.Item)
+             .WithMany()
+             .HasForeignKey(r => r.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasIndex(r => new { r.ItemId, r.IsDefault });
+        });
+
+        modelBuilder.Entity<RoutingStep>(b =>
+        {
+            b.ToTable("m_routing_steps");
+            b.Property(s => s.StandardTime).HasPrecision(10, 2);
+            // Routing 削除時にステップも一括削除
+            b.HasOne<Routing>()
+             .WithMany(r => r.Steps)
+             .HasForeignKey(s => s.RoutingId)
+             .OnDelete(DeleteBehavior.Cascade);
+            b.HasOne(s => s.Process)
+             .WithMany()
+             .HasForeignKey(s => s.ProcessId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(s => s.Equipment)
+             .WithMany()
+             .HasForeignKey(s => s.EquipmentId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasIndex(s => new { s.RoutingId, s.Sequence }).IsUnique();
+        });
+
+        modelBuilder.Entity<WorkOrderOperation>(b =>
+        {
+            b.ToTable("t_work_order_operations");
+            b.Property(o => o.ActualQuantity).HasPrecision(18, 4);
+            b.Property(o => o.DefectQuantity).HasPrecision(18, 4);
+            b.Property(o => o.WorkerUserId).HasMaxLength(450);
+            b.Property(o => o.Notes).HasMaxLength(1000);
+            // 製造指示削除不可（実績が参照しているため）
+            b.HasOne(o => o.WorkOrder)
+             .WithMany()
+             .HasForeignKey(o => o.WorkOrderId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(o => o.Process)
+             .WithMany()
+             .HasForeignKey(o => o.ProcessId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(o => o.Equipment)
+             .WithMany()
+             .HasForeignKey(o => o.EquipmentId)
+             .OnDelete(DeleteBehavior.SetNull);
+            b.HasIndex(o => o.WorkOrderId);
+            b.HasIndex(o => new { o.WorkOrderId, o.Sequence });
         });
     }
 }
