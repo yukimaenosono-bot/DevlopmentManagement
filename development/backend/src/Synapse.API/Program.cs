@@ -64,7 +64,8 @@ try
                 new System.Text.Json.Serialization.JsonStringEnumConverter(
                     System.Text.Json.JsonNamingPolicy.CamelCase));
         });
-    builder.Services.AddOpenApi();
+    // ドキュメント名を "openapi" にすることで openapi.json として出力される
+    builder.Services.AddOpenApi("openapi");
 
     var app = builder.Build();
 
