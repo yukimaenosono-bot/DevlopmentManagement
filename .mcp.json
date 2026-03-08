@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "drawio": {
+      "command": "node",
+      "args": [
+        "/Users/marufoi/Documents/DevlopmentManagement/tools/drawio-mcp/dist/index.js"
+      ]
+    }
+  }
+}
