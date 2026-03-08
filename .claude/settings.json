@@ -38,11 +38,29 @@
       "Bash(git add development/backend/src/Synapse.API/Synapse.API.csproj development/backend/src/Synapse.API/Program.cs)",
       "Bash(git add development/frontend/package.json development/frontend/orval.config.ts development/frontend/src/services/ development/frontend/src/types/)",
       "Bash(git add \"requirements/11_在庫管理システム概論.md\")",
-      "Bash(git add development/backend/src/Synapse.Domain/Entities/Warehouse.cs development/backend/src/Synapse.Domain/Entities/Stock.cs development/backend/src/Synapse.Domain/Entities/InventoryTransaction.cs development/backend/src/Synapse.Domain/Enums/WarehouseType.cs development/backend/src/Synapse.Domain/Enums/InventoryTransactionType.cs development/backend/src/Synapse.Application/Inventory/ development/backend/src/Synapse.Application/Warehouses/ development/backend/src/Synapse.Application/Common/Interfaces/IApplicationDbContext.cs development/backend/src/Synapse.API/Controllers/InventoryController.cs development/backend/src/Synapse.API/Controllers/WarehousesController.cs development/backend/src/Synapse.API/Program.cs development/backend/src/Synapse.API/Synapse.API.csproj development/backend/src/Synapse.Infrastructure/Persistence/ApplicationDbContext.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/20260308100000_AddInventory.cs development/backend/tests/Synapse.Tests/Application/Inventory/ development/backend/tests/Synapse.Tests/Application/Warehouses/)"
+      "Bash(git add development/backend/src/Synapse.Domain/Entities/Warehouse.cs development/backend/src/Synapse.Domain/Entities/Stock.cs development/backend/src/Synapse.Domain/Entities/InventoryTransaction.cs development/backend/src/Synapse.Domain/Enums/WarehouseType.cs development/backend/src/Synapse.Domain/Enums/InventoryTransactionType.cs development/backend/src/Synapse.Application/Inventory/ development/backend/src/Synapse.Application/Warehouses/ development/backend/src/Synapse.Application/Common/Interfaces/IApplicationDbContext.cs development/backend/src/Synapse.API/Controllers/InventoryController.cs development/backend/src/Synapse.API/Controllers/WarehousesController.cs development/backend/src/Synapse.API/Program.cs development/backend/src/Synapse.API/Synapse.API.csproj development/backend/src/Synapse.Infrastructure/Persistence/ApplicationDbContext.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/20260308100000_AddInventory.cs development/backend/tests/Synapse.Tests/Application/Inventory/ development/backend/tests/Synapse.Tests/Application/Warehouses/)",
+      "Bash(pnpm build)",
+      "Bash(pnpm dlx shadcn@latest add input select checkbox radio-group table dialog form badge skeleton tabs card alert separator tooltip pagination --overwrite)",
+      "Bash(pnpm dlx shadcn@latest add sonner label --overwrite)",
+      "Bash(pnpm dlx shadcn@latest add dropdown-menu --overwrite)",
+      "Bash(node -e \"const m = require\\(''/Users/marufoi/Documents/DevlopmentManagement/development/frontend/node_modules/@base-ui/react/menu''\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(pnpm add sonner)",
+      "Bash(docker compose exec frontend pnpm add sonner)",
+      "Bash(docker compose exec frontend pnpm install)",
+      "Bash(docker compose exec -e CI=true frontend pnpm install)",
+      "Bash(docker compose build frontend)",
+      "Bash(docker compose up -d frontend)",
+      "Bash(git rm -r --cached development/frontend/.pnpm-store/)",
+      "Bash(docker compose restart frontend)",
+      "Bash(docker compose logs frontend --tail=20)",
+      "Bash(git add development/frontend/orval.config.ts development/frontend/package.json development/frontend/pnpm-lock.yaml development/frontend/src/App.tsx development/frontend/src/index.css development/frontend/src/main.tsx development/frontend/src/components/ development/frontend/src/hooks/ development/frontend/src/pages/ development/frontend/src/stores/ \"development/frontend/src/generated/zod/\")",
+      "Bash(git add development/docker-compose.yml development/frontend/Dockerfile.dev development/frontend/entrypoint.dev.sh)",
+      "Bash(git add .gitignore \"detailed-design/07_フロントエンド設計方針.md\")"
     ],
     "additionalDirectories": [
       "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain",
-      "/Users/marufoi/.claude"
+      "/Users/marufoi/.claude",
+      "/Users/marufoi/Documents/DevlopmentManagement/development/frontend/src/generated/zod"
     ]
   }
 }
