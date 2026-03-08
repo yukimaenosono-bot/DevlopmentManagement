@@ -71,7 +71,15 @@
       "Bash(pnpm add -D chromatic)",
       "Bash(git add .github/ development/docker-compose.yml development/frontend/Dockerfile.dev development/frontend/package.json development/frontend/pnpm-lock.yaml development/frontend/src/App.tsx development/frontend/.storybook/ development/frontend/entrypoint.storybook.sh development/frontend/src/components/composite/ development/frontend/src/components/layout/TabletLayout.tsx development/frontend/src/components/ui/textarea.tsx development/frontend/src/pages/UiCatalogPage.tsx development/frontend/src/pages/inventory/ development/frontend/src/pages/manufacturing-order/ development/frontend/src/pages/master/ development/frontend/src/pages/process/ development/frontend/src/pages/production-plan/ development/frontend/src/pages/quality-control/ development/frontend/src/pages/shipment/ development/frontend/src/pages/system/)",
       "Bash(git push origin main)",
-      "Bash(gh run list --workflow=chromatic.yml --limit=3)"
+      "Bash(gh run list --workflow=chromatic.yml --limit=3)",
+      "Bash(docker compose -f development/docker-compose.yml ps)",
+      "Bash(docker compose -f development/docker-compose.yml logs --tail=30 frontend api)",
+      "Bash(docker compose -f development/docker-compose.yml build frontend)",
+      "Bash(docker compose -f development/docker-compose.yml up -d frontend)",
+      "Bash(docker compose -f development/docker-compose.yml logs --tail=20 frontend)",
+      "Bash(grep -n \"export\\\\|interface\\\\|type \" /Users/marufoi/Documents/DevlopmentManagement/development/frontend/src/generated/model/*.ts)",
+      "Bash(git add development/frontend/entrypoint.dev.sh development/frontend/src/components/ui/dropdown-menu.tsx \"detailed-design/10_フロントエンド画面設計.md\")",
+      "Bash(git add .claude/settings.json skills-lock.json .agents/skills/deploy-to-vercel/ .agents/skills/vercel-composition-patterns/ .agents/skills/vercel-react-native-skills/ .agents/skills/web-design-guidelines/)"
     ],
     "additionalDirectories": [
       "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain",
