@@ -23,6 +23,9 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
     public DbSet<Equipment> Equipments => Set<Equipment>();
     public DbSet<WorkOrder> WorkOrders => Set<WorkOrder>();
     public DbSet<BomLine> BomLines => Set<BomLine>();
+    public DbSet<Warehouse> Warehouses => Set<Warehouse>();
+    public DbSet<Stock> Stocks => Set<Stock>();
+    public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
 
     /// <summary>
     /// 保存時に Entity.UpdatedAt を自動更新する。
@@ -108,6 +111,53 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>, IApplicationDbCo
             b.HasOne(bl => bl.ChildItem)
              .WithMany()
              .HasForeignKey(bl => bl.ChildItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Warehouse>(b =>
+        {
+            b.ToTable("m_warehouses");
+            b.HasIndex(w => w.Code).IsUnique();
+            b.Property(w => w.Code).HasMaxLength(50);
+            b.Property(w => w.Name).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<Stock>(b =>
+        {
+            b.ToTable("t_inventories");
+            b.Property(s => s.LotNumber).HasMaxLength(100);
+            b.Property(s => s.Quantity).HasPrecision(18, 4);
+            // 在庫照会の主要アクセスパターン: 品目+倉庫+ロット
+            b.HasIndex(s => new { s.ItemId, s.WarehouseId, s.LotNumber });
+            // 品目・倉庫は削除不可（在庫が参照しているため）
+            b.HasOne(s => s.Item)
+             .WithMany()
+             .HasForeignKey(s => s.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(s => s.Warehouse)
+             .WithMany()
+             .HasForeignKey(s => s.WarehouseId)
+             .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<InventoryTransaction>(b =>
+        {
+            b.ToTable("t_inventory_histories");
+            b.Property(t => t.LotNumber).HasMaxLength(100);
+            b.Property(t => t.Quantity).HasPrecision(18, 4);
+            b.Property(t => t.ReferenceNumber).HasMaxLength(100);
+            b.Property(t => t.Note).HasMaxLength(500);
+            b.Property(t => t.CreatedByUserId).HasMaxLength(450);
+            // 履歴の検索は処理日時降順が主なアクセスパターン
+            b.HasIndex(t => t.TransactedAt);
+            // 品目・倉庫は削除不可（履歴が参照しているため）
+            b.HasOne(t => t.Item)
+             .WithMany()
+             .HasForeignKey(t => t.ItemId)
+             .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(t => t.Warehouse)
+             .WithMany()
+             .HasForeignKey(t => t.WarehouseId)
              .OnDelete(DeleteBehavior.Restrict);
         });
     }
