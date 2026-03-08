@@ -41,6 +41,17 @@ DevlopmentManagement/
 └── Makefile                           # Docker操作コマンド
 ```
 
+## API-First 開発フロー（黄金サイクル）
+
+API の仕様変更時は以下の手順を厳守すること。
+
+1.  **バックエンド修正**: DTO や Controller を修正
+2.  **OpenAPI 更新**: `cd development/backend && dotnet build` を実行
+    *   `development/openapi.json` が自動更新される
+3.  **クライアント生成**: `cd development/frontend && pnpm generate` を実行
+    *   `src/generated/` (Hooks/Models) および `src/generated/zod/` (Schemas) が更新される
+4.  **型エラー修正**: 更新された型に従いフロントエンドの実装を追従させる
+
 ## よく使うコマンド
 
 ```bash
@@ -53,30 +64,25 @@ make shell-api    # APIコンテナシェル
 make shell-db     # DBシェル（psql）
 
 # バックエンド（development/backend/）
-dotnet build      # ビルド
+dotnet build      # ビルド（openapi.json も更新される）
 dotnet test       # テスト実行
 
 # フロントエンド（development/frontend/）
 pnpm install      # 依存インストール
+pnpm generate     # APIクライアント & Zod スキーマ生成
 pnpm dev          # 開発サーバ起動
-pnpm build        # 本番ビルド
+pnpm build        # 本番ビルド（型チェック含む）
 pnpm lint         # ESLint実行
 ```
 
 ## コーディング規約
 
-### バックエンド共通
-- **クリーンアーキテクチャ厳守**: ドメイン層は他レイヤーに依存しない
-- **CQRS**: 読み取りはQuery、書き込みはCommand。MediatRで実装
-- **命名**: クラス名はPascalCase、メソッド名はPascalCase、変数はcamelCase
-- **Nullable有効**: `null`非許容型を基本とし、`?`は明示的に使用
-- **例外**: ドメイン例外は`Synapse.Domain`に定義し、HTTPステータスへのマッピングはAPIレイヤーで行う
-- **ログ**: Serilog使用。構造化ログを書く（文字列補間禁止）
-
 ### フロントエンド共通
 - **TypeScript strict**: 型を省略しない
 - **コンポーネント**: 関数コンポーネント + Hooks を使用
 - **ESモジュール**: CommonJS (`require`) は使用しない
+- **自動生成ファイルの保護**: `src/generated/` 以下のファイルは直接編集せず、必ず `pnpm generate` で更新すること
+- **共通リクエスト設定**: `src/services/apiClient.ts` で Mutator を管理する
 
 ## ドメイン用語対照
 
