@@ -12,8 +12,8 @@ export default defineConfig({
       target: 'src/generated',
       schemas: 'src/generated/model',
       client: 'react-query',
-      // MSW ハンドラーと Faker によるダミーデータ生成を有効化
-      mock: true,
+      // MSW ハンドラーは生成しない（orval v7 では import が欠落するバグがあるため無効化）
+      mock: false,
       override: {
         // 共通の axios インスタンスをミューテーターとして使用する
         mutator: {

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.WorkOrders.Commands;
+using Synapse.Application.WorkOrders.Dtos;
 using Synapse.Application.WorkOrders.Queries;
 using Synapse.Domain.Enums;
 using Synapse.Domain.Exceptions;
@@ -26,6 +27,7 @@ public class WorkOrdersController : ControllerBase
     /// ステータス・日付範囲でフィルタリング可能（製造指示一覧画面 SCR-MO-001 対応）。
     /// </summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<WorkOrderDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetList(
         [FromQuery] WorkOrderStatus? status = null,
         [FromQuery] DateOnly? from = null,
@@ -38,6 +40,8 @@ public class WorkOrdersController : ControllerBase
 
     /// <summary>製造指示を1件取得する。</summary>
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(WorkOrderDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
         try
@@ -57,6 +61,8 @@ public class WorkOrdersController : ControllerBase
     /// 発行者は JWT クレームから自動取得する。
     /// </summary>
     [HttpPost]
+    [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateWorkOrderRequest request, CancellationToken ct)
     {
         try
@@ -96,6 +102,9 @@ public class WorkOrdersController : ControllerBase
     /// 完了・キャンセル済みは更新不可。着手中は数量変更不可。
     /// </summary>
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateWorkOrderRequest request, CancellationToken ct)
     {
         try
@@ -123,6 +132,9 @@ public class WorkOrdersController : ControllerBase
 
     /// <summary>製造指示をキャンセルする（MO-004）。発行済・着手中のみ可能。</summary>
     [HttpPost("{id:guid}/cancel")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cancel(Guid id, CancellationToken ct)
     {
         try
@@ -146,6 +158,9 @@ public class WorkOrdersController : ControllerBase
     /// 発行済（Issued）からのみ遷移可能。着手後は指示数量が変更不可になる。
     /// </summary>
     [HttpPost("{id:guid}/start")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Start(Guid id, CancellationToken ct)
     {
         try
@@ -169,6 +184,9 @@ public class WorkOrdersController : ControllerBase
     /// 着手中（InProgress）からのみ遷移可能。完了後は変更・キャンセル不可。
     /// </summary>
     [HttpPost("{id:guid}/complete")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Complete(Guid id, CancellationToken ct)
     {
         try

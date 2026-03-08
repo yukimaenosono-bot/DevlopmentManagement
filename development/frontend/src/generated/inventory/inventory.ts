@@ -27,8 +27,11 @@ import type {
   AdjustInventoryRequest,
   GetApiInventoryParams,
   GetApiInventoryTransactionsParams,
+  InventoryTransactionDto,
   IssueInventoryRequest,
-  ReceiveInventoryRequest
+  ProblemDetails,
+  ReceiveInventoryRequest,
+  StockDto
 } from '.././model';
 
 import { apiClient } from '../../services/apiClient';
@@ -46,7 +49,7 @@ export const getApiInventory = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<StockDto[]>(
       {url: `/api/inventory`, method: 'GET',
         params, signal
     },
@@ -141,7 +144,7 @@ export const getApiInventoryTransactions = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<InventoryTransactionDto[]>(
       {url: `/api/inventory/transactions`, method: 'GET',
         params, signal
     },
@@ -246,7 +249,7 @@ export const postApiInventoryReceive = (
   
 
 
-export const getPostApiInventoryReceiveMutationOptions = <TError = unknown,
+export const getPostApiInventoryReceiveMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryReceive>>, TError,{data: ReceiveInventoryRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryReceive>>, TError,{data: ReceiveInventoryRequest}, TContext> => {
 
@@ -273,13 +276,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiInventoryReceiveMutationResult = NonNullable<Awaited<ReturnType<typeof postApiInventoryReceive>>>
     export type PostApiInventoryReceiveMutationBody = ReceiveInventoryRequest
-    export type PostApiInventoryReceiveMutationError = unknown
+    export type PostApiInventoryReceiveMutationError = ProblemDetails
 
     /**
  * @summary 入庫を記録する。
 TransactionType は PurchaseReceipt/ManufacturingReceipt/ReturnReceipt/OtherReceipt のいずれかを指定する。
  */
-export const usePostApiInventoryReceive = <TError = unknown,
+export const usePostApiInventoryReceive = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryReceive>>, TError,{data: ReceiveInventoryRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiInventoryReceive>>,
@@ -311,7 +314,7 @@ export const postApiInventoryIssue = (
   
 
 
-export const getPostApiInventoryIssueMutationOptions = <TError = unknown,
+export const getPostApiInventoryIssueMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryIssue>>, TError,{data: IssueInventoryRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryIssue>>, TError,{data: IssueInventoryRequest}, TContext> => {
 
@@ -338,12 +341,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiInventoryIssueMutationResult = NonNullable<Awaited<ReturnType<typeof postApiInventoryIssue>>>
     export type PostApiInventoryIssueMutationBody = IssueInventoryRequest
-    export type PostApiInventoryIssueMutationError = unknown
+    export type PostApiInventoryIssueMutationError = ProblemDetails
 
     /**
  * @summary 出庫を記録する。在庫不足の場合は 400 を返す。
  */
-export const usePostApiInventoryIssue = <TError = unknown,
+export const usePostApiInventoryIssue = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryIssue>>, TError,{data: IssueInventoryRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiInventoryIssue>>,
@@ -376,7 +379,7 @@ export const postApiInventoryAdjust = (
   
 
 
-export const getPostApiInventoryAdjustMutationOptions = <TError = unknown,
+export const getPostApiInventoryAdjustMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryAdjust>>, TError,{data: AdjustInventoryRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryAdjust>>, TError,{data: AdjustInventoryRequest}, TContext> => {
 
@@ -403,13 +406,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiInventoryAdjustMutationResult = NonNullable<Awaited<ReturnType<typeof postApiInventoryAdjust>>>
     export type PostApiInventoryAdjustMutationBody = AdjustInventoryRequest
-    export type PostApiInventoryAdjustMutationError = unknown
+    export type PostApiInventoryAdjustMutationError = ProblemDetails
 
     /**
  * @summary 棚卸調整を記録する。NewQuantity に実地棚卸の実測値を指定する。
 帳簿在庫との差分を自動計算して履歴に記録する。
  */
-export const usePostApiInventoryAdjust = <TError = unknown,
+export const usePostApiInventoryAdjust = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiInventoryAdjust>>, TError,{data: AdjustInventoryRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiInventoryAdjust>>,

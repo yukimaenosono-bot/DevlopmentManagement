@@ -26,7 +26,9 @@ import type {
 import type {
   CreateWarehouseRequest,
   GetApiWarehousesParams,
-  UpdateWarehouseRequest
+  ProblemDetails,
+  UpdateWarehouseRequest,
+  WarehouseDto
 } from '.././model';
 
 import { apiClient } from '../../services/apiClient';
@@ -43,7 +45,7 @@ export const getApiWarehouses = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<WarehouseDto[]>(
       {url: `/api/warehouses`, method: 'GET',
         params, signal
     },
@@ -136,7 +138,7 @@ export const postApiWarehouses = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/warehouses`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createWarehouseRequest, signal
@@ -146,7 +148,7 @@ export const postApiWarehouses = (
   
 
 
-export const getPostApiWarehousesMutationOptions = <TError = unknown,
+export const getPostApiWarehousesMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWarehouses>>, TError,{data: CreateWarehouseRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiWarehouses>>, TError,{data: CreateWarehouseRequest}, TContext> => {
 
@@ -173,12 +175,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiWarehousesMutationResult = NonNullable<Awaited<ReturnType<typeof postApiWarehouses>>>
     export type PostApiWarehousesMutationBody = CreateWarehouseRequest
-    export type PostApiWarehousesMutationError = unknown
+    export type PostApiWarehousesMutationError = ProblemDetails
 
     /**
  * @summary 倉庫を新規作成する。
  */
-export const usePostApiWarehouses = <TError = unknown,
+export const usePostApiWarehouses = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWarehouses>>, TError,{data: CreateWarehouseRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiWarehouses>>,
@@ -210,7 +212,7 @@ export const putApiWarehousesId = (
   
 
 
-export const getPutApiWarehousesIdMutationOptions = <TError = unknown,
+export const getPutApiWarehousesIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiWarehousesId>>, TError,{id: string;data: UpdateWarehouseRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiWarehousesId>>, TError,{id: string;data: UpdateWarehouseRequest}, TContext> => {
 
@@ -237,12 +239,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiWarehousesIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiWarehousesId>>>
     export type PutApiWarehousesIdMutationBody = UpdateWarehouseRequest
-    export type PutApiWarehousesIdMutationError = unknown
+    export type PutApiWarehousesIdMutationError = ProblemDetails
 
     /**
  * @summary 倉庫名・倉庫区分を更新する。
  */
-export const usePutApiWarehousesId = <TError = unknown,
+export const usePutApiWarehousesId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiWarehousesId>>, TError,{id: string;data: UpdateWarehouseRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiWarehousesId>>,
@@ -271,7 +273,7 @@ export const deleteApiWarehousesId = (
   
 
 
-export const getDeleteApiWarehousesIdMutationOptions = <TError = unknown,
+export const getDeleteApiWarehousesIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiWarehousesId>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiWarehousesId>>, TError,{id: string}, TContext> => {
 
@@ -298,12 +300,12 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiWarehousesIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiWarehousesId>>>
     
-    export type DeleteApiWarehousesIdMutationError = unknown
+    export type DeleteApiWarehousesIdMutationError = ProblemDetails
 
     /**
  * @summary 倉庫を廃止する（論理削除）。
  */
-export const useDeleteApiWarehousesId = <TError = unknown,
+export const useDeleteApiWarehousesId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiWarehousesId>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiWarehousesId>>,

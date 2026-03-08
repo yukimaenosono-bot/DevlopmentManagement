@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Inventory.Commands;
+using Synapse.Application.Inventory.Dtos;
 using Synapse.Application.Inventory.Queries;
 using Synapse.Domain.Enums;
 using Synapse.Domain.Exceptions;
@@ -26,6 +27,7 @@ public class InventoryController : ControllerBase
     /// 在庫数量0の行も返す（在庫ゼロの管理目的）。
     /// </summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<StockDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetStock(
         [FromQuery] Guid? itemId = null,
         [FromQuery] Guid? warehouseId = null,
@@ -40,6 +42,7 @@ public class InventoryController : ControllerBase
     /// 結果は処理日時の降順で返す。
     /// </summary>
     [HttpGet("transactions")]
+    [ProducesResponseType(typeof(IEnumerable<InventoryTransactionDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetTransactions(
         [FromQuery] Guid? itemId = null,
         [FromQuery] Guid? warehouseId = null,
@@ -56,6 +59,8 @@ public class InventoryController : ControllerBase
     /// TransactionType は PurchaseReceipt/ManufacturingReceipt/ReturnReceipt/OtherReceipt のいずれかを指定する。
     /// </summary>
     [HttpPost("receive")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Receive([FromBody] ReceiveInventoryRequest request, CancellationToken ct)
     {
         try
@@ -81,6 +86,8 @@ public class InventoryController : ControllerBase
     /// 出庫を記録する。在庫不足の場合は 400 を返す。
     /// </summary>
     [HttpPost("issue")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Issue([FromBody] IssueInventoryRequest request, CancellationToken ct)
     {
         try
@@ -106,6 +113,8 @@ public class InventoryController : ControllerBase
     /// 帳簿在庫との差分を自動計算して履歴に記録する。
     /// </summary>
     [HttpPost("adjust")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Adjust([FromBody] AdjustInventoryRequest request, CancellationToken ct)
     {
         try

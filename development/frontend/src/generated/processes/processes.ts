@@ -26,6 +26,8 @@ import type {
 import type {
   CreateProcessRequest,
   GetApiProcessesParams,
+  ProblemDetails,
+  ProcessDto,
   UpdateProcessRequest
 } from '.././model';
 
@@ -43,7 +45,7 @@ export const getApiProcesses = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<ProcessDto[]>(
       {url: `/api/Processes`, method: 'GET',
         params, signal
     },
@@ -136,7 +138,7 @@ export const postApiProcesses = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/Processes`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createProcessRequest, signal
@@ -146,7 +148,7 @@ export const postApiProcesses = (
   
 
 
-export const getPostApiProcessesMutationOptions = <TError = unknown,
+export const getPostApiProcessesMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiProcesses>>, TError,{data: CreateProcessRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiProcesses>>, TError,{data: CreateProcessRequest}, TContext> => {
 
@@ -173,12 +175,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiProcessesMutationResult = NonNullable<Awaited<ReturnType<typeof postApiProcesses>>>
     export type PostApiProcessesMutationBody = CreateProcessRequest
-    export type PostApiProcessesMutationError = unknown
+    export type PostApiProcessesMutationError = ProblemDetails
 
     /**
  * @summary 工程を新規作成する。工程コード重複時は 400 を返す。
  */
-export const usePostApiProcesses = <TError = unknown,
+export const usePostApiProcesses = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiProcesses>>, TError,{data: CreateProcessRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiProcesses>>,
@@ -200,7 +202,7 @@ export const getApiProcessesId = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<ProcessDto>(
       {url: `/api/Processes/${id}`, method: 'GET', signal
     },
       );
@@ -216,7 +218,7 @@ export const getGetApiProcessesIdQueryKey = (id?: string,) => {
     }
 
     
-export const getGetApiProcessesIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>>, }
+export const getGetApiProcessesIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = ProblemDetails>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
@@ -235,10 +237,10 @@ const {query: queryOptions} = options ?? {};
 }
 
 export type GetApiProcessesIdQueryResult = NonNullable<Awaited<ReturnType<typeof getApiProcessesId>>>
-export type GetApiProcessesIdQueryError = unknown
+export type GetApiProcessesIdQueryError = ProblemDetails
 
 
-export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = unknown>(
+export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = ProblemDetails>(
  id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiProcessesId>>,
@@ -248,7 +250,7 @@ export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiPro
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = unknown>(
+export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiProcessesId>>,
@@ -258,7 +260,7 @@ export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiPro
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = unknown>(
+export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -266,7 +268,7 @@ export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiPro
  * @summary 工程を1件取得する。
  */
 
-export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = unknown>(
+export function useGetApiProcessesId<TData = Awaited<ReturnType<typeof getApiProcessesId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiProcessesId>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -302,7 +304,7 @@ export const putApiProcessesId = (
   
 
 
-export const getPutApiProcessesIdMutationOptions = <TError = unknown,
+export const getPutApiProcessesIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiProcessesId>>, TError,{id: string;data: UpdateProcessRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiProcessesId>>, TError,{id: string;data: UpdateProcessRequest}, TContext> => {
 
@@ -329,12 +331,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiProcessesIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiProcessesId>>>
     export type PutApiProcessesIdMutationBody = UpdateProcessRequest
-    export type PutApiProcessesIdMutationError = unknown
+    export type PutApiProcessesIdMutationError = ProblemDetails
 
     /**
  * @summary 工程を更新する。
  */
-export const usePutApiProcessesId = <TError = unknown,
+export const usePutApiProcessesId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiProcessesId>>, TError,{id: string;data: UpdateProcessRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiProcessesId>>,
@@ -364,7 +366,7 @@ export const deleteApiProcessesId = (
   
 
 
-export const getDeleteApiProcessesIdMutationOptions = <TError = unknown,
+export const getDeleteApiProcessesIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiProcessesId>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiProcessesId>>, TError,{id: string}, TContext> => {
 
@@ -391,13 +393,13 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiProcessesIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiProcessesId>>>
     
-    export type DeleteApiProcessesIdMutationError = unknown
+    export type DeleteApiProcessesIdMutationError = ProblemDetails
 
     /**
  * @summary 工程を廃止にする（論理削除）。
 物理削除は行わない。過去の工程実績・ルーティングが工程コードを参照しているため。
  */
-export const useDeleteApiProcessesId = <TError = unknown,
+export const useDeleteApiProcessesId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiProcessesId>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiProcessesId>>,

@@ -9,7 +9,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
 import { formatDate } from "@/lib/utils"
-import type { WorkOrderDto } from "../types"
+import type { WorkOrderDto } from "@/generated/model"
 import { WorkOrderStatusBadge } from "./WorkOrderStatusBadge"
 
 interface WorkOrderTableProps {

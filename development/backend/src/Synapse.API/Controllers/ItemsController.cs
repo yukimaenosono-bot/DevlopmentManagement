@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Items.Commands;
+using Synapse.Application.Items.Dtos;
 using Synapse.Application.Items.Queries;
 using Synapse.Domain.Enums;
 using Synapse.Domain.Exceptions;
@@ -22,6 +23,7 @@ public class ItemsController : ControllerBase
 
     /// <summary>品目一覧を取得する。</summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetList([FromQuery] bool activeOnly = true, CancellationToken ct = default)
     {
         var result = await _mediator.Send(new GetItemListQuery(activeOnly), ct);
@@ -30,6 +32,8 @@ public class ItemsController : ControllerBase
 
     /// <summary>品目を1件取得する。</summary>
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ItemDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
         try
@@ -45,6 +49,8 @@ public class ItemsController : ControllerBase
 
     /// <summary>品目を新規作成する。品目コード重複時は 400 を返す。</summary>
     [HttpPost]
+    [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateItemRequest request, CancellationToken ct)
     {
         try
@@ -66,6 +72,8 @@ public class ItemsController : ControllerBase
 
     /// <summary>品目を更新する。</summary>
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateItemRequest request, CancellationToken ct)
     {
         try
@@ -88,6 +96,8 @@ public class ItemsController : ControllerBase
     /// 物理削除は行わない。過去の製造実績・在庫履歴が品目名を参照しているため。
     /// </summary>
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         try

@@ -26,6 +26,8 @@ import type {
 import type {
   CreateItemRequest,
   GetApiItemsParams,
+  ItemDto,
+  ProblemDetails,
   UpdateItemRequest
 } from '.././model';
 
@@ -43,7 +45,7 @@ export const getApiItems = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<ItemDto[]>(
       {url: `/api/Items`, method: 'GET',
         params, signal
     },
@@ -136,7 +138,7 @@ export const postApiItems = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/Items`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createItemRequest, signal
@@ -146,7 +148,7 @@ export const postApiItems = (
   
 
 
-export const getPostApiItemsMutationOptions = <TError = unknown,
+export const getPostApiItemsMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiItems>>, TError,{data: CreateItemRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiItems>>, TError,{data: CreateItemRequest}, TContext> => {
 
@@ -173,12 +175,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiItemsMutationResult = NonNullable<Awaited<ReturnType<typeof postApiItems>>>
     export type PostApiItemsMutationBody = CreateItemRequest
-    export type PostApiItemsMutationError = unknown
+    export type PostApiItemsMutationError = ProblemDetails
 
     /**
  * @summary 品目を新規作成する。品目コード重複時は 400 を返す。
  */
-export const usePostApiItems = <TError = unknown,
+export const usePostApiItems = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiItems>>, TError,{data: CreateItemRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiItems>>,
@@ -200,7 +202,7 @@ export const getApiItemsId = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<ItemDto>(
       {url: `/api/Items/${id}`, method: 'GET', signal
     },
       );
@@ -216,7 +218,7 @@ export const getGetApiItemsIdQueryKey = (id?: string,) => {
     }
 
     
-export const getGetApiItemsIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>>, }
+export const getGetApiItemsIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = ProblemDetails>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
@@ -235,10 +237,10 @@ const {query: queryOptions} = options ?? {};
 }
 
 export type GetApiItemsIdQueryResult = NonNullable<Awaited<ReturnType<typeof getApiItemsId>>>
-export type GetApiItemsIdQueryError = unknown
+export type GetApiItemsIdQueryError = ProblemDetails
 
 
-export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = unknown>(
+export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = ProblemDetails>(
  id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiItemsId>>,
@@ -248,7 +250,7 @@ export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = unknown>(
+export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiItemsId>>,
@@ -258,7 +260,7 @@ export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = unknown>(
+export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -266,7 +268,7 @@ export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId
  * @summary 品目を1件取得する。
  */
 
-export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = unknown>(
+export function useGetApiItemsId<TData = Awaited<ReturnType<typeof getApiItemsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiItemsId>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -302,7 +304,7 @@ export const putApiItemsId = (
   
 
 
-export const getPutApiItemsIdMutationOptions = <TError = unknown,
+export const getPutApiItemsIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiItemsId>>, TError,{id: string;data: UpdateItemRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiItemsId>>, TError,{id: string;data: UpdateItemRequest}, TContext> => {
 
@@ -329,12 +331,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiItemsIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiItemsId>>>
     export type PutApiItemsIdMutationBody = UpdateItemRequest
-    export type PutApiItemsIdMutationError = unknown
+    export type PutApiItemsIdMutationError = ProblemDetails
 
     /**
  * @summary 品目を更新する。
  */
-export const usePutApiItemsId = <TError = unknown,
+export const usePutApiItemsId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiItemsId>>, TError,{id: string;data: UpdateItemRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiItemsId>>,
@@ -364,7 +366,7 @@ export const deleteApiItemsId = (
   
 
 
-export const getDeleteApiItemsIdMutationOptions = <TError = unknown,
+export const getDeleteApiItemsIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiItemsId>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiItemsId>>, TError,{id: string}, TContext> => {
 
@@ -391,13 +393,13 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiItemsIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiItemsId>>>
     
-    export type DeleteApiItemsIdMutationError = unknown
+    export type DeleteApiItemsIdMutationError = ProblemDetails
 
     /**
  * @summary 品目を廃番にする（論理削除）。
 物理削除は行わない。過去の製造実績・在庫履歴が品目名を参照しているため。
  */
-export const useDeleteApiItemsId = <TError = unknown,
+export const useDeleteApiItemsId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiItemsId>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiItemsId>>,

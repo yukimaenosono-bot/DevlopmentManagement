@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Bom.Commands;
+using Synapse.Application.Bom.Dtos;
 using Synapse.Application.Bom.Queries;
 using Synapse.Domain.Exceptions;
 
@@ -24,6 +25,7 @@ public class BomController : ControllerBase
     /// asOf を指定すると有効期間内のラインのみ返す（製造指示発行時の引当計算で使用）。
     /// </summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<BomLineDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetBom(
         [FromQuery] Guid parentItemId,
         [FromQuery] DateOnly? asOf = null,
@@ -35,6 +37,8 @@ public class BomController : ControllerBase
 
     /// <summary>BOM に子品目ラインを追加する。</summary>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddLine([FromBody] AddBomLineRequest request, CancellationToken ct)
     {
         try
@@ -65,6 +69,9 @@ public class BomController : ControllerBase
 
     /// <summary>BOM ラインの数量・単位・有効期間を更新する。</summary>
     [HttpPut("{parentItemId:guid}/{childItemId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateLine(
         Guid parentItemId, Guid childItemId,
         [FromBody] UpdateBomLineRequest request,
@@ -90,6 +97,8 @@ public class BomController : ControllerBase
 
     /// <summary>BOM から子品目ラインを削除する。</summary>
     [HttpDelete("{parentItemId:guid}/{childItemId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemoveLine(
         Guid parentItemId, Guid childItemId,
         CancellationToken ct)

@@ -1,5 +1,4 @@
 import { useQueryClient } from "@tanstack/react-query"
-import type { UseQueryResult } from "@tanstack/react-query"
 import {
   useGetApiWorkOrdersId,
   usePostApiWorkOrders,
@@ -9,11 +8,10 @@ import {
   usePostApiWorkOrdersIdComplete,
 } from "@/generated/work-orders/work-orders"
 import { workOrderKeys } from "@/services/queryKeys"
-import type { WorkOrderDto } from "../types"
 
 /** 製造指示1件取得フック */
 export function useWorkOrder(id: string) {
-  return useGetApiWorkOrdersId(id) as UseQueryResult<WorkOrderDto>
+  return useGetApiWorkOrdersId(id)
 }
 
 /** 製造指示発行 Mutation */

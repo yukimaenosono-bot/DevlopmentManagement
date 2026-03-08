@@ -25,7 +25,9 @@ import type {
 
 import type {
   CreateUserRequest,
-  UpdateUserRequest
+  ProblemDetails,
+  UpdateUserRequest,
+  UserDto
 } from '.././model';
 
 import { apiClient } from '../../services/apiClient';
@@ -42,7 +44,7 @@ export const getApiUsers = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<UserDto[]>(
       {url: `/api/Users`, method: 'GET', signal
     },
       );
@@ -135,7 +137,7 @@ export const postApiUsers = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/Users`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createUserRequest, signal
@@ -145,7 +147,7 @@ export const postApiUsers = (
   
 
 
-export const getPostApiUsersMutationOptions = <TError = unknown,
+export const getPostApiUsersMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiUsers>>, TError,{data: CreateUserRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiUsers>>, TError,{data: CreateUserRequest}, TContext> => {
 
@@ -172,13 +174,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiUsersMutationResult = NonNullable<Awaited<ReturnType<typeof postApiUsers>>>
     export type PostApiUsersMutationBody = CreateUserRequest
-    export type PostApiUsersMutationError = unknown
+    export type PostApiUsersMutationError = ProblemDetails
 
     /**
  * @summary ユーザーを新規作成する。
 ロール名は設計書（detailed-design/08）のロール定義を参照すること。
  */
-export const usePostApiUsers = <TError = unknown,
+export const usePostApiUsers = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiUsers>>, TError,{data: CreateUserRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiUsers>>,
@@ -200,7 +202,7 @@ export const getApiUsersId = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<UserDto>(
       {url: `/api/Users/${id}`, method: 'GET', signal
     },
       );
@@ -216,7 +218,7 @@ export const getGetApiUsersIdQueryKey = (id?: string,) => {
     }
 
     
-export const getGetApiUsersIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>>, }
+export const getGetApiUsersIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = ProblemDetails>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
@@ -235,10 +237,10 @@ const {query: queryOptions} = options ?? {};
 }
 
 export type GetApiUsersIdQueryResult = NonNullable<Awaited<ReturnType<typeof getApiUsersId>>>
-export type GetApiUsersIdQueryError = unknown
+export type GetApiUsersIdQueryError = ProblemDetails
 
 
-export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = unknown>(
+export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = ProblemDetails>(
  id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiUsersId>>,
@@ -248,7 +250,7 @@ export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = unknown>(
+export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiUsersId>>,
@@ -258,7 +260,7 @@ export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = unknown>(
+export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -266,7 +268,7 @@ export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId
  * @summary ユーザーを1件取得する。
  */
 
-export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = unknown>(
+export function useGetApiUsersId<TData = Awaited<ReturnType<typeof getApiUsersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiUsersId>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -302,7 +304,7 @@ export const putApiUsersId = (
   
 
 
-export const getPutApiUsersIdMutationOptions = <TError = unknown,
+export const getPutApiUsersIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiUsersId>>, TError,{id: string;data: UpdateUserRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiUsersId>>, TError,{id: string;data: UpdateUserRequest}, TContext> => {
 
@@ -329,12 +331,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiUsersIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiUsersId>>>
     export type PutApiUsersIdMutationBody = UpdateUserRequest
-    export type PutApiUsersIdMutationError = unknown
+    export type PutApiUsersIdMutationError = ProblemDetails
 
     /**
  * @summary ユーザーの表示名・ロールを更新する。
  */
-export const usePutApiUsersId = <TError = unknown,
+export const usePutApiUsersId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiUsersId>>, TError,{id: string;data: UpdateUserRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiUsersId>>,
@@ -364,7 +366,7 @@ export const deleteApiUsersId = (
   
 
 
-export const getDeleteApiUsersIdMutationOptions = <TError = unknown,
+export const getDeleteApiUsersIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiUsersId>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiUsersId>>, TError,{id: string}, TContext> => {
 
@@ -391,13 +393,13 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiUsersIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiUsersId>>>
     
-    export type DeleteApiUsersIdMutationError = unknown
+    export type DeleteApiUsersIdMutationError = ProblemDetails
 
     /**
  * @summary ユーザーを削除する（物理削除）。
 削除前に製造実績・操作ログとの関係を確認すること。
  */
-export const useDeleteApiUsersId = <TError = unknown,
+export const useDeleteApiUsersId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiUsersId>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiUsersId>>,

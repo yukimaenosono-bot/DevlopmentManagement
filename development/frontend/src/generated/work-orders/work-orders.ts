@@ -26,7 +26,9 @@ import type {
 import type {
   CreateWorkOrderRequest,
   GetApiWorkOrdersParams,
-  UpdateWorkOrderRequest
+  ProblemDetails,
+  UpdateWorkOrderRequest,
+  WorkOrderDto
 } from '.././model';
 
 import { apiClient } from '../../services/apiClient';
@@ -44,7 +46,7 @@ export const getApiWorkOrders = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<WorkOrderDto[]>(
       {url: `/api/work-orders`, method: 'GET',
         params, signal
     },
@@ -140,7 +142,7 @@ export const postApiWorkOrders = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/work-orders`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createWorkOrderRequest, signal
@@ -150,7 +152,7 @@ export const postApiWorkOrders = (
   
 
 
-export const getPostApiWorkOrdersMutationOptions = <TError = unknown,
+export const getPostApiWorkOrdersMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrders>>, TError,{data: CreateWorkOrderRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrders>>, TError,{data: CreateWorkOrderRequest}, TContext> => {
 
@@ -177,14 +179,14 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiWorkOrdersMutationResult = NonNullable<Awaited<ReturnType<typeof postApiWorkOrders>>>
     export type PostApiWorkOrdersMutationBody = CreateWorkOrderRequest
-    export type PostApiWorkOrdersMutationError = unknown
+    export type PostApiWorkOrdersMutationError = ProblemDetails
 
     /**
  * @summary 製造指示を発行する（MO-001）。
 製造指示番号は MO-YYYYMMDD-NNNN 形式で自動採番される。
 発行者は JWT クレームから自動取得する。
  */
-export const usePostApiWorkOrders = <TError = unknown,
+export const usePostApiWorkOrders = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrders>>, TError,{data: CreateWorkOrderRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiWorkOrders>>,
@@ -206,7 +208,7 @@ export const getApiWorkOrdersId = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<WorkOrderDto>(
       {url: `/api/work-orders/${id}`, method: 'GET', signal
     },
       );
@@ -222,7 +224,7 @@ export const getGetApiWorkOrdersIdQueryKey = (id?: string,) => {
     }
 
     
-export const getGetApiWorkOrdersIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>>, }
+export const getGetApiWorkOrdersIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = ProblemDetails>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
@@ -241,10 +243,10 @@ const {query: queryOptions} = options ?? {};
 }
 
 export type GetApiWorkOrdersIdQueryResult = NonNullable<Awaited<ReturnType<typeof getApiWorkOrdersId>>>
-export type GetApiWorkOrdersIdQueryError = unknown
+export type GetApiWorkOrdersIdQueryError = ProblemDetails
 
 
-export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = unknown>(
+export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = ProblemDetails>(
  id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiWorkOrdersId>>,
@@ -254,7 +256,7 @@ export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWo
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = unknown>(
+export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiWorkOrdersId>>,
@@ -264,7 +266,7 @@ export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWo
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = unknown>(
+export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -272,7 +274,7 @@ export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWo
  * @summary 製造指示を1件取得する。
  */
 
-export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = unknown>(
+export function useGetApiWorkOrdersId<TData = Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiWorkOrdersId>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -309,7 +311,7 @@ export const putApiWorkOrdersId = (
   
 
 
-export const getPutApiWorkOrdersIdMutationOptions = <TError = unknown,
+export const getPutApiWorkOrdersIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiWorkOrdersId>>, TError,{id: string;data: UpdateWorkOrderRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiWorkOrdersId>>, TError,{id: string;data: UpdateWorkOrderRequest}, TContext> => {
 
@@ -336,13 +338,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiWorkOrdersIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiWorkOrdersId>>>
     export type PutApiWorkOrdersIdMutationBody = UpdateWorkOrderRequest
-    export type PutApiWorkOrdersIdMutationError = unknown
+    export type PutApiWorkOrdersIdMutationError = ProblemDetails
 
     /**
  * @summary 製造指示を更新する（MO-003）。
 完了・キャンセル済みは更新不可。着手中は数量変更不可。
  */
-export const usePutApiWorkOrdersId = <TError = unknown,
+export const usePutApiWorkOrdersId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiWorkOrdersId>>, TError,{id: string;data: UpdateWorkOrderRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiWorkOrdersId>>,
@@ -372,7 +374,7 @@ export const postApiWorkOrdersIdCancel = (
   
 
 
-export const getPostApiWorkOrdersIdCancelMutationOptions = <TError = unknown,
+export const getPostApiWorkOrdersIdCancelMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdCancel>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdCancel>>, TError,{id: string}, TContext> => {
 
@@ -399,12 +401,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiWorkOrdersIdCancelMutationResult = NonNullable<Awaited<ReturnType<typeof postApiWorkOrdersIdCancel>>>
     
-    export type PostApiWorkOrdersIdCancelMutationError = unknown
+    export type PostApiWorkOrdersIdCancelMutationError = ProblemDetails
 
     /**
  * @summary 製造指示をキャンセルする（MO-004）。発行済・着手中のみ可能。
  */
-export const usePostApiWorkOrdersIdCancel = <TError = unknown,
+export const usePostApiWorkOrdersIdCancel = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdCancel>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiWorkOrdersIdCancel>>,
@@ -435,7 +437,7 @@ export const postApiWorkOrdersIdStart = (
   
 
 
-export const getPostApiWorkOrdersIdStartMutationOptions = <TError = unknown,
+export const getPostApiWorkOrdersIdStartMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdStart>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdStart>>, TError,{id: string}, TContext> => {
 
@@ -462,13 +464,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiWorkOrdersIdStartMutationResult = NonNullable<Awaited<ReturnType<typeof postApiWorkOrdersIdStart>>>
     
-    export type PostApiWorkOrdersIdStartMutationError = unknown
+    export type PostApiWorkOrdersIdStartMutationError = ProblemDetails
 
     /**
  * @summary 製造指示を着手中に移行する（MO-007）。
 発行済（Issued）からのみ遷移可能。着手後は指示数量が変更不可になる。
  */
-export const usePostApiWorkOrdersIdStart = <TError = unknown,
+export const usePostApiWorkOrdersIdStart = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdStart>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiWorkOrdersIdStart>>,
@@ -499,7 +501,7 @@ export const postApiWorkOrdersIdComplete = (
   
 
 
-export const getPostApiWorkOrdersIdCompleteMutationOptions = <TError = unknown,
+export const getPostApiWorkOrdersIdCompleteMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdComplete>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdComplete>>, TError,{id: string}, TContext> => {
 
@@ -526,13 +528,13 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiWorkOrdersIdCompleteMutationResult = NonNullable<Awaited<ReturnType<typeof postApiWorkOrdersIdComplete>>>
     
-    export type PostApiWorkOrdersIdCompleteMutationError = unknown
+    export type PostApiWorkOrdersIdCompleteMutationError = ProblemDetails
 
     /**
  * @summary 製造指示を完了に移行する（MO-007）。
 着手中（InProgress）からのみ遷移可能。完了後は変更・キャンセル不可。
  */
-export const usePostApiWorkOrdersIdComplete = <TError = unknown,
+export const usePostApiWorkOrdersIdComplete = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiWorkOrdersIdComplete>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiWorkOrdersIdComplete>>,

@@ -25,7 +25,9 @@ import type {
 
 import type {
   AddBomLineRequest,
+  BomLineDto,
   GetApiBomParams,
+  ProblemDetails,
   UpdateBomLineRequest
 } from '.././model';
 
@@ -44,7 +46,7 @@ export const getApiBom = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<BomLineDto[]>(
       {url: `/api/bom`, method: 'GET',
         params, signal
     },
@@ -148,7 +150,7 @@ export const postApiBom = (
   
 
 
-export const getPostApiBomMutationOptions = <TError = unknown,
+export const getPostApiBomMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiBom>>, TError,{data: AddBomLineRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiBom>>, TError,{data: AddBomLineRequest}, TContext> => {
 
@@ -175,12 +177,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiBomMutationResult = NonNullable<Awaited<ReturnType<typeof postApiBom>>>
     export type PostApiBomMutationBody = AddBomLineRequest
-    export type PostApiBomMutationError = unknown
+    export type PostApiBomMutationError = ProblemDetails
 
     /**
  * @summary BOM に子品目ラインを追加する。
  */
-export const usePostApiBom = <TError = unknown,
+export const usePostApiBom = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiBom>>, TError,{data: AddBomLineRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiBom>>,
@@ -213,7 +215,7 @@ export const putApiBomParentItemIdChildItemId = (
   
 
 
-export const getPutApiBomParentItemIdChildItemIdMutationOptions = <TError = unknown,
+export const getPutApiBomParentItemIdChildItemIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string;data: UpdateBomLineRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string;data: UpdateBomLineRequest}, TContext> => {
 
@@ -240,12 +242,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiBomParentItemIdChildItemIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiBomParentItemIdChildItemId>>>
     export type PutApiBomParentItemIdChildItemIdMutationBody = UpdateBomLineRequest
-    export type PutApiBomParentItemIdChildItemIdMutationError = unknown
+    export type PutApiBomParentItemIdChildItemIdMutationError = ProblemDetails
 
     /**
  * @summary BOM ラインの数量・単位・有効期間を更新する。
  */
-export const usePutApiBomParentItemIdChildItemId = <TError = unknown,
+export const usePutApiBomParentItemIdChildItemId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string;data: UpdateBomLineRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiBomParentItemIdChildItemId>>,
@@ -275,7 +277,7 @@ export const deleteApiBomParentItemIdChildItemId = (
   
 
 
-export const getDeleteApiBomParentItemIdChildItemIdMutationOptions = <TError = unknown,
+export const getDeleteApiBomParentItemIdChildItemIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string}, TContext> => {
 
@@ -302,12 +304,12 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiBomParentItemIdChildItemIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiBomParentItemIdChildItemId>>>
     
-    export type DeleteApiBomParentItemIdChildItemIdMutationError = unknown
+    export type DeleteApiBomParentItemIdChildItemIdMutationError = ProblemDetails
 
     /**
  * @summary BOM から子品目ラインを削除する。
  */
-export const useDeleteApiBomParentItemIdChildItemId = <TError = unknown,
+export const useDeleteApiBomParentItemIdChildItemId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiBomParentItemIdChildItemId>>, TError,{parentItemId: string;childItemId: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiBomParentItemIdChildItemId>>,

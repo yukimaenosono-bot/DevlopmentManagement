@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Users.Commands;
+using Synapse.Application.Users.Dtos;
 using Synapse.Application.Users.Queries;
 using Synapse.Domain.Exceptions;
 
@@ -25,6 +26,7 @@ public class UsersController : ControllerBase
 
     /// <summary>ユーザー一覧を取得する。</summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetList(CancellationToken ct)
     {
         var result = await _mediator.Send(new GetUserListQuery(), ct);
@@ -33,6 +35,8 @@ public class UsersController : ControllerBase
 
     /// <summary>ユーザーを1件取得する。</summary>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(string id, CancellationToken ct)
     {
         try
@@ -51,6 +55,8 @@ public class UsersController : ControllerBase
     /// ロール名は設計書（detailed-design/08）のロール定義を参照すること。
     /// </summary>
     [HttpPost]
+    [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request, CancellationToken ct)
     {
         try
@@ -70,6 +76,8 @@ public class UsersController : ControllerBase
 
     /// <summary>ユーザーの表示名・ロールを更新する。</summary>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(string id, [FromBody] UpdateUserRequest request, CancellationToken ct)
     {
         try
@@ -88,6 +96,8 @@ public class UsersController : ControllerBase
     /// 削除前に製造実績・操作ログとの関係を確認すること。
     /// </summary>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string id, CancellationToken ct)
     {
         try

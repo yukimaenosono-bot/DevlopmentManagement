@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Processes.Commands;
+using Synapse.Application.Processes.Dtos;
 using Synapse.Application.Processes.Queries;
 using Synapse.Domain.Enums;
 using Synapse.Domain.Exceptions;
@@ -22,6 +23,7 @@ public class ProcessesController : ControllerBase
 
     /// <summary>工程一覧を取得する。</summary>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<ProcessDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetList([FromQuery] bool activeOnly = true, CancellationToken ct = default)
     {
         var result = await _mediator.Send(new GetProcessListQuery(activeOnly), ct);
@@ -30,6 +32,8 @@ public class ProcessesController : ControllerBase
 
     /// <summary>工程を1件取得する。</summary>
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ProcessDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
         try
@@ -45,6 +49,8 @@ public class ProcessesController : ControllerBase
 
     /// <summary>工程を新規作成する。工程コード重複時は 400 を返す。</summary>
     [HttpPost]
+    [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateProcessRequest request, CancellationToken ct)
     {
         try
@@ -64,6 +70,8 @@ public class ProcessesController : ControllerBase
 
     /// <summary>工程を更新する。</summary>
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProcessRequest request, CancellationToken ct)
     {
         try
@@ -83,6 +91,8 @@ public class ProcessesController : ControllerBase
     /// 物理削除は行わない。過去の工程実績・ルーティングが工程コードを参照しているため。
     /// </summary>
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         try

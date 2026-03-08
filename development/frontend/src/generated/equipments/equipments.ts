@@ -25,7 +25,9 @@ import type {
 
 import type {
   CreateEquipmentRequest,
+  EquipmentDto,
   GetApiEquipmentsParams,
+  ProblemDetails,
   UpdateEquipmentRequest
 } from '.././model';
 
@@ -44,7 +46,7 @@ export const getApiEquipments = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<EquipmentDto[]>(
       {url: `/api/Equipments`, method: 'GET',
         params, signal
     },
@@ -138,7 +140,7 @@ export const postApiEquipments = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<unknown>(
       {url: `/api/Equipments`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createEquipmentRequest, signal
@@ -148,7 +150,7 @@ export const postApiEquipments = (
   
 
 
-export const getPostApiEquipmentsMutationOptions = <TError = unknown,
+export const getPostApiEquipmentsMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiEquipments>>, TError,{data: CreateEquipmentRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof postApiEquipments>>, TError,{data: CreateEquipmentRequest}, TContext> => {
 
@@ -175,12 +177,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PostApiEquipmentsMutationResult = NonNullable<Awaited<ReturnType<typeof postApiEquipments>>>
     export type PostApiEquipmentsMutationBody = CreateEquipmentRequest
-    export type PostApiEquipmentsMutationError = unknown
+    export type PostApiEquipmentsMutationError = ProblemDetails
 
     /**
  * @summary 設備を新規作成する。設備コード重複時・存在しない工程指定時は 400 を返す。
  */
-export const usePostApiEquipments = <TError = unknown,
+export const usePostApiEquipments = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiEquipments>>, TError,{data: CreateEquipmentRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postApiEquipments>>,
@@ -202,7 +204,7 @@ export const getApiEquipmentsId = (
 ) => {
       
       
-      return apiClient<void>(
+      return apiClient<EquipmentDto>(
       {url: `/api/Equipments/${id}`, method: 'GET', signal
     },
       );
@@ -218,7 +220,7 @@ export const getGetApiEquipmentsIdQueryKey = (id?: string,) => {
     }
 
     
-export const getGetApiEquipmentsIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>>, }
+export const getGetApiEquipmentsIdQueryOptions = <TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = ProblemDetails>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
@@ -237,10 +239,10 @@ const {query: queryOptions} = options ?? {};
 }
 
 export type GetApiEquipmentsIdQueryResult = NonNullable<Awaited<ReturnType<typeof getApiEquipmentsId>>>
-export type GetApiEquipmentsIdQueryError = unknown
+export type GetApiEquipmentsIdQueryError = ProblemDetails
 
 
-export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = unknown>(
+export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = ProblemDetails>(
  id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiEquipmentsId>>,
@@ -250,7 +252,7 @@ export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEq
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = unknown>(
+export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApiEquipmentsId>>,
@@ -260,7 +262,7 @@ export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEq
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = unknown>(
+export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -268,7 +270,7 @@ export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEq
  * @summary 設備を1件取得する。
  */
 
-export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = unknown>(
+export function useGetApiEquipmentsId<TData = Awaited<ReturnType<typeof getApiEquipmentsId>>, TError = ProblemDetails>(
  id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiEquipmentsId>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -304,7 +306,7 @@ export const putApiEquipmentsId = (
   
 
 
-export const getPutApiEquipmentsIdMutationOptions = <TError = unknown,
+export const getPutApiEquipmentsIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiEquipmentsId>>, TError,{id: string;data: UpdateEquipmentRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof putApiEquipmentsId>>, TError,{id: string;data: UpdateEquipmentRequest}, TContext> => {
 
@@ -331,12 +333,12 @@ const {mutation: mutationOptions} = options ?
 
     export type PutApiEquipmentsIdMutationResult = NonNullable<Awaited<ReturnType<typeof putApiEquipmentsId>>>
     export type PutApiEquipmentsIdMutationBody = UpdateEquipmentRequest
-    export type PutApiEquipmentsIdMutationError = unknown
+    export type PutApiEquipmentsIdMutationError = ProblemDetails
 
     /**
  * @summary 設備を更新する。
  */
-export const usePutApiEquipmentsId = <TError = unknown,
+export const usePutApiEquipmentsId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putApiEquipmentsId>>, TError,{id: string;data: UpdateEquipmentRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof putApiEquipmentsId>>,
@@ -366,7 +368,7 @@ export const deleteApiEquipmentsId = (
   
 
 
-export const getDeleteApiEquipmentsIdMutationOptions = <TError = unknown,
+export const getDeleteApiEquipmentsIdMutationOptions = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiEquipmentsId>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiEquipmentsId>>, TError,{id: string}, TContext> => {
 
@@ -393,13 +395,13 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteApiEquipmentsIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiEquipmentsId>>>
     
-    export type DeleteApiEquipmentsIdMutationError = unknown
+    export type DeleteApiEquipmentsIdMutationError = ProblemDetails
 
     /**
  * @summary 設備を廃棄・撤去扱いにする（論理削除）。
 物理削除は行わない。過去の工程実績が設備コードを参照しているため。
  */
-export const useDeleteApiEquipmentsId = <TError = unknown,
+export const useDeleteApiEquipmentsId = <TError = ProblemDetails,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiEquipmentsId>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiEquipmentsId>>,

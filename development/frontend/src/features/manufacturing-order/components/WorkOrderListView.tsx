@@ -7,7 +7,7 @@ import { Alert } from "@/components/ui/alert"
 import { WorkOrderFilterForm, type WorkOrderFilterValues } from "./WorkOrderFilterForm"
 import { WorkOrderTable } from "./WorkOrderTable"
 import { useWorkOrders } from "../hooks/useWorkOrders"
-import type { WorkOrderDto } from "../types"
+import type { WorkOrderDto } from "@/generated/model"
 
 const DEFAULT_FILTERS: WorkOrderFilterValues = {
   workOrderNumber: "",
