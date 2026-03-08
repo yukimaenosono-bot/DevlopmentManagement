@@ -60,5 +60,9 @@
       "Bash(lsof -i :5000 -sTCP:LISTEN)",
       "Bash(lsof -i :3000 -sTCP:LISTEN)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "drawio"
+  ],
+  "enableAllProjectMcpServers": true
 }

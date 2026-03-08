@@ -20,10 +20,29 @@
       "Bash(dotnet test development/backend/tests/Synapse.Tests/Synapse.Tests.csproj)",
       "Bash(dotnet test /Users/marufoi/Documents/DevlopmentManagement/development/backend/tests/Synapse.Tests/Synapse.Tests.csproj)",
       "Bash(dotnet build /Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.API/Synapse.API.csproj)",
-      "Bash(git add .claude/settings.json development/backend/src/Synapse.Application/Common/Interfaces/IApplicationDbContext.cs development/backend/src/Synapse.Application/Synapse.Application.csproj development/backend/src/Synapse.Application/Items/ development/backend/src/Synapse.Infrastructure/DependencyInjection.cs development/backend/src/Synapse.Infrastructure/Persistence/ApplicationDbContext.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/ development/backend/src/Synapse.API/Controllers/ItemsController.cs development/backend/src/Synapse.Domain/Entities/ development/backend/src/Synapse.Domain/Enums/ development/backend/src/Synapse.Domain/Exceptions/ development/backend/tests/Synapse.Tests/Application/)"
+      "Bash(git add .claude/settings.json development/backend/src/Synapse.Application/Common/Interfaces/IApplicationDbContext.cs development/backend/src/Synapse.Application/Synapse.Application.csproj development/backend/src/Synapse.Application/Items/ development/backend/src/Synapse.Infrastructure/DependencyInjection.cs development/backend/src/Synapse.Infrastructure/Persistence/ApplicationDbContext.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/ development/backend/src/Synapse.API/Controllers/ItemsController.cs development/backend/src/Synapse.Domain/Entities/ development/backend/src/Synapse.Domain/Enums/ development/backend/src/Synapse.Domain/Exceptions/ development/backend/tests/Synapse.Tests/Application/)",
+      "Bash(git add detailed-design/08_バックエンド設計方針.md)",
+      "Bash(dotnet ef migrations add AddProcessMaster --project src/Synapse.Infrastructure --startup-project src/Synapse.API --output-dir Persistence/Migrations)",
+      "Bash(dotnet test tests/Synapse.Tests/Synapse.Tests.csproj)",
+      "Read(//Users/marufoi/.claude/**)",
+      "Bash(dotnet ef migrations add AddEquipmentMaster --project src/Synapse.Infrastructure --startup-project src/Synapse.API --output-dir Persistence/Migrations)",
+      "Read(//Users/marufoi/**)",
+      "Bash(npm install)",
+      "Bash(npm run build)",
+      "Bash(git check-ignore -v tools/drawio-mcp/node_modules)",
+      "Bash(git check-ignore -v tools/drawio-mcp/node_modules tools/drawio-mcp/dist)",
+      "Bash(dotnet ef migrations add AddWorkOrder --project src/Synapse.Infrastructure --startup-project src/Synapse.API --output-dir Persistence/Migrations)",
+      "Bash(dotnet ef migrations add AddBom --project src/Synapse.Infrastructure --startup-project src/Synapse.API --output-dir Persistence/Migrations)",
+      "mcp__drawio__drawio_write",
+      "Bash(git add \"detailed-design/07_フロントエンド設計方針.md\" \"detailed-design/08_バックエンド設計方針.md\")",
+      "Bash(git add development/backend/src/Synapse.API/Synapse.API.csproj development/backend/src/Synapse.API/Program.cs)",
+      "Bash(git add development/frontend/package.json development/frontend/orval.config.ts development/frontend/src/services/ development/frontend/src/types/)",
+      "Bash(git add \"requirements/11_在庫管理システム概論.md\")",
+      "Bash(git add development/backend/src/Synapse.Domain/Entities/Warehouse.cs development/backend/src/Synapse.Domain/Entities/Stock.cs development/backend/src/Synapse.Domain/Entities/InventoryTransaction.cs development/backend/src/Synapse.Domain/Enums/WarehouseType.cs development/backend/src/Synapse.Domain/Enums/InventoryTransactionType.cs development/backend/src/Synapse.Application/Inventory/ development/backend/src/Synapse.Application/Warehouses/ development/backend/src/Synapse.Application/Common/Interfaces/IApplicationDbContext.cs development/backend/src/Synapse.API/Controllers/InventoryController.cs development/backend/src/Synapse.API/Controllers/WarehousesController.cs development/backend/src/Synapse.API/Program.cs development/backend/src/Synapse.API/Synapse.API.csproj development/backend/src/Synapse.Infrastructure/Persistence/ApplicationDbContext.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs development/backend/src/Synapse.Infrastructure/Persistence/Migrations/20260308100000_AddInventory.cs development/backend/tests/Synapse.Tests/Application/Inventory/ development/backend/tests/Synapse.Tests/Application/Warehouses/)"
     ],
     "additionalDirectories": [
-      "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain"
+      "/Users/marufoi/Documents/DevlopmentManagement/development/backend/src/Synapse.Domain",
+      "/Users/marufoi/.claude"
     ]
   }
 }
