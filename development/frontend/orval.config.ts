@@ -27,4 +27,16 @@ export default defineConfig({
       },
     },
   },
+  // Zod スキーマ生成用の設定を追加
+  zod: {
+    input: {
+      target: '../openapi.json',
+    },
+    output: {
+      mode: 'tags-split',
+      client: 'zod',
+      target: 'src/generated/zod',
+      fileExtension: '.zod.ts',
+    },
+  },
 })
