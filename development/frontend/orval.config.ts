@@ -12,6 +12,8 @@ export default defineConfig({
       target: 'src/generated',
       schemas: 'src/generated/model',
       client: 'react-query',
+      // MSW ハンドラーと Faker によるダミーデータ生成を有効化
+      mock: true,
       override: {
         // 共通の axios インスタンスをミューテーターとして使用する
         mutator: {
@@ -27,7 +29,7 @@ export default defineConfig({
       },
     },
   },
-  // Zod スキーマ生成用の設定を追加
+  // Zod スキーマ生成用の設定
   zod: {
     input: {
       target: '../openapi.json',
