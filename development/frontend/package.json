@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "orval",
+    "generate:fetch": "curl -sf http://localhost:5000/openapi/openapi.json -o ../openapi.json && orval"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -31,6 +33,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "orval": "^7.0.0",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^24.10.1",
