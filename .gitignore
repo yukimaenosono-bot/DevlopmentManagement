@@ -1,2 +1,23 @@
 node_modules/
 tools/drawio-mcp/dist/
+
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
+# ビルド成果物
+dist/
+dist-ssr/
+
+# ローカル環境設定（コミット不要）
+.claude/settings.local.json
+.env.local
+*.local
+
+# OS
+.DS_Store
+
+# エディタ
+.idea/
+*.suo
+*.sw?
