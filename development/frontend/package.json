@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate": "orval",
-    "generate:fetch": "curl -sf http://localhost:5000/openapi/openapi.json -o ../openapi.json && orval"
+    "generate:fetch": "curl -sf http://localhost:5000/openapi/openapi.json -o ../openapi.json && orval",
+    "storybook": "storybook dev --port 6006 --host 0.0.0.0",
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -37,12 +40,16 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@faker-js/faker": "^10.3.0",
+    "@storybook/addon-designs": "^11.1.2",
+    "@storybook/react": "^10.2.16",
+    "@storybook/react-vite": "^10.2.16",
     "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.27",
+    "chromatic": "^15.2.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
@@ -50,6 +57,7 @@
     "msw": "^2.12.10",
     "orval": "^7.0.0",
     "postcss": "^8.5.8",
+    "storybook": "^10.2.16",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
